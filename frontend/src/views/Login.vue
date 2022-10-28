@@ -11,7 +11,7 @@
             class="card login"
             :class="{ error: emptyFields }"
           >
-            <h1>Sign In</h1>
+            <h1>Đăng nhập</h1>
             <form class="form-group" @submit.prevent="submitForm">
               <input
                 v-model="username"
@@ -32,16 +32,16 @@
               </div>
               <input type="submit" class="btn btn-primary" @click="doLogin" />
               <p>
-                Don't have an account?
+                Chưa có tài khoản?
                 <a
                   href="/sign-up"
                   @click="
                     (registerActive = !registerActive), (emptyFields = false)
                   "
-                  >Sign up here</a
+                  >Đăng ký tại đây</a
                 >
               </p>
-              <p><a href="/forgot-password">Forgot your password?</a></p>
+              <p><a href="/forgot-password">Quên mật khẩu?</a></p>
             </form>
           </div>
         </div>
@@ -63,7 +63,7 @@ export default {
     };
   },
   mounted() {
-    document.title = "Log In | Djackets";
+    document.title = "Đăng nhập | Confectio";
   },
   methods: {
     async submitForm() {
@@ -97,7 +97,7 @@ export default {
               this.errors.push(`${property}: ${error.response.data[property]}`);
             }
           } else {
-            this.errors.push("Something went wrong. Please try again");
+            this.errors.push("Có lỗi xảy ra. Vui lòng thử lại.");
 
             console.log(JSON.stringify(error));
           }

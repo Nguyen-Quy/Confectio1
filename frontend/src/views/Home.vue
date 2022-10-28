@@ -6,7 +6,7 @@
           <div class="hero__search__form">
             <form method="get" action="/search">
               <input type="text" placeholder="What do yo u need?" />
-              <button type="submit" class="site-btn">SEARCH</button>
+              <button type="submit" class="site-btn">Tìm kiếm</button>
             </form>
           </div>
         </div>
@@ -17,12 +17,12 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
-              <h2>Featured Product</h2>
+              <h2>Sản phẩm nổi bật</h2>
             </div>
             <div class="featured__controls">
               <ul>
                 <li class="active mixitup-control-active">
-                  <a href="/">All</a>
+                  <a href="/">Tất cả</a>
                 </li>
                 <li data-filter=".banh" class="">Bánh</li>
                 <li data-filter=".keo" class="">Kẹo</li>
@@ -41,7 +41,7 @@
       </div>
     </section>
     <section class="section">
-      <router-view/>
+      <router-view />
     </section>
   </div>
 </template>
@@ -63,24 +63,23 @@ export default {
   mounted() {
     this.getAllProducts();
 
-    document.title = "Home";
+    document.title = "Trang chủ | Confectio";
   },
   methods: {
     async getAllProducts() {
-      this.$store.commit('setIsLoading', true)
+      this.$store.commit("setIsLoading", true);
 
       await axios
-        .get('/api/v1/shop/')
-        .then(response => {
-          this.allProducts = response.data
+        .get("/api/v1/shop/")
+        .then((response) => {
+          this.allProducts = response.data;
         })
-        .catch(error => {
-          console.log(error)
-        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-      this.$store.commit('setIsLoading', false)
+      this.$store.commit("setIsLoading", false);
     },
   },
-
 };
 </script>
