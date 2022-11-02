@@ -1,47 +1,51 @@
 <template>
-  <div class="page-cart">
-    <div class="columns is-multiline">
-      <div class="column is-12">
-        <h1 class="title">Giỏ hàng</h1>
-      </div>
+  <div class="Cart">
+    <div class="container">
+      <section class="page-cart">
+        <div class="columns is-multiline">
+          <div class="column is-12">
+            <h1 class="title">Cart</h1>
+          </div>
 
-      <div class="column is-12 box">
-        <table class="table is-fullwidth" v-if="cartTotalLength">
-          <thead>
-            <tr>
-              <th>Sản phẩm</th>
-              <th>Đơn giá</th>
-              <th>Số lượng</th>
-              <th>Tổng</th>
-              <th></th>
-            </tr>
-          </thead>
+          <div class="column is-12 box">
+            <table class="table is-fullwidth" v-if="cartTotalLength">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                  <th></th>
+                </tr>
+              </thead>
 
-          <tbody>
-            <CartItem
-              v-for="item in cart.items"
-              :key="item.product.id"
-              :initialItem="item"
-              @removeFromCart="removeFromCart"
-            />
-          </tbody>
-        </table>
+              <tbody>
+                <CartItem
+                  v-for="item in cart.items"
+                  :key="item.product.id"
+                  :initialItem="item"
+                  @removeFromCart="removeFromCart"
+                />
+              </tbody>
+            </table>
 
-        <p v-else>Giỏ hàng chưa có sản phẩm nào...</p>
-      </div>
+            <p v-else>You don't have any products in your cart...</p>
+          </div>
 
-      <div class="column is-12 box">
-        <h2 class="subtitle">Summary</h2>
+          <div class="column is-12 box">
+            <h2 class="subtitle">Summary</h2>
 
-        <strong>${{ cartTotalPrice.toFixed(2) }}</strong
-        >, {{ cartTotalLength }} items
+            <strong>{{ cartTotalPrice.toFixed(3) }} VNĐ</strong>,
+            {{ cartTotalLength }} items
 
-        <hr />
+            <hr />
 
-        <router-link to="/cart/checkout" class="button is-dark"
-          >Thanh toán</router-link
-        >
-      </div>
+            <router-link to="/cart/checkout" class="button is-dark"
+              >Proceed to checkout</router-link
+            >
+          </div>
+        </div>
+      </section>
     </div>
   </div>
 </template>

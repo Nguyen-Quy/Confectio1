@@ -1,116 +1,120 @@
 <template>
-  <div class="page-checkout">
-    <div class="columns is-multiline">
-      <div class="column is-12">
-        <h1 class="title">Thanh toán</h1>
-      </div>
-
-      <div class="column is-12 box">
-        <table class="table is-fullwidth">
-          <thead>
-            <tr>
-              <th>Sản phẩm</th>
-              <th>Đơn giá</th>
-              <th>Số lượng</th>
-              <th>Tổng</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr v-for="item in cart.items" :key="item.product.id">
-              <td>{{ item.product.name }}</td>
-              <td>${{ item.product.price }}</td>
-              <td>{{ item.quantity }}</td>
-              <td>${{ getItemTotal(item).toFixed(2) }}</td>
-            </tr>
-          </tbody>
-
-          <tfoot>
-            <tr>
-              <td colspan="2">Tổng</td>
-              <td>{{ cartTotalLength }}</td>
-              <td>${{ cartTotalPrice.toFixed(2) }}</td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <div class="column is-12 box">
-        <h2 class="subtitle">Thông tin giao hàng</h2>
-
-        <p class="has-text-grey mb-4">* Yêu cầu nhập tất cả thông tin</p>
-
+  <div class="CheckOut">
+    <div class="container">
+      <section class="page-checkout">
         <div class="columns is-multiline">
-          <div class="column is-6">
-            <div class="field">
-              <label>Tên khách hàng*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="first_name" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label>Họ*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="last_name" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label>E-mail*</label>
-              <div class="control">
-                <input type="email" class="input" v-model="email" />
-              </div>
-            </div>
-
-            <div class="field">
-              <label>Số điện thoại*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="phone" />
-              </div>
-            </div>
+          <div class="column is-12">
+            <h1 class="title">Checkout</h1>
           </div>
 
-          <div class="column is-6">
-            <div class="field">
-              <label>Địa chỉ*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="address" />
+          <div class="column is-12 box">
+            <table class="table is-fullwidth">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Total</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr v-for="item in cart.items" :key="item.product.id">
+                  <td>{{ item.product.name }}</td>
+                  <td>${{ item.product.price }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>${{ getItemTotal(item).toFixed(2) }}</td>
+                </tr>
+              </tbody>
+
+              <tfoot>
+                <tr>
+                  <td colspan="2">Total</td>
+                  <td>{{ cartTotalLength }}</td>
+                  <td>${{ cartTotalPrice.toFixed(2) }}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+
+          <div class="box">
+            <h2 class="subtitle">Shipping details</h2>
+
+            <p class="has-text-grey mb-4">* All fields are required</p>
+
+            <div class="row from_checkout form-group">
+              <div class="column1 is-6">
+                <div class="field">
+                  <label>First name*</label>
+                  <div class="control">
+                    <input type="text" class="input" v-model="first_name" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label>Last name*</label>
+                  <div class="control">
+                    <input type="text" class="input" v-model="last_name" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label>E-mail*</label>
+                  <div class="control">
+                    <input type="email" class="input" v-model="email" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label>Phone*</label>
+                  <div class="control">
+                    <input type="text" class="input" v-model="phone" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="column2 is-6">
+                <div class="field">
+                  <label>Address*</label>
+                  <div class="control">
+                    <input type="text" class="input" v-model="address" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label>Zip code*</label>
+                  <div class="control">
+                    <input type="text" class="input" v-model="zipcode" />
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label>Place*</label>
+                  <div class="control">
+                    <input type="text" class="input" v-model="place" />
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="field">
-              <label>Zip code*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="zipcode" />
-              </div>
+            <div class="notification is-danger mt-4" v-if="errors.length">
+              <p style="color: red;" v-for="error in errors" :key="error">{{ error }}</p>
             </div>
 
-            <div class="field">
-              <label>Nơi giao hàng*</label>
-              <div class="control">
-                <input type="text" class="input" v-model="place" />
-              </div>
-            </div>
+            <hr />
+
+            <div id="card-element" class="mb-5"></div>
+
+            <template v-if="cartTotalLength">
+              <hr />
+
+              <button class="button_pay is-dark" @click="submitForm">
+                Pay with Stripe
+              </button>
+            </template>
           </div>
         </div>
-
-        <div class="notification is-danger mt-4" v-if="errors.length">
-          <p v-for="error in errors" :key="error">{{ error }}</p>
-        </div>
-
-        <hr />
-
-        <div id="card-element" class="mb-5"></div>
-
-        <template v-if="cartTotalLength">
-          <hr />
-
-          <button class="button is-dark" @click="submitForm">
-            Thanh toán bằng Stripe
-          </button>
-        </template>
-      </div>
+      </section>
     </div>
   </div>
 </template>
@@ -138,7 +142,7 @@ export default {
     };
   },
   mounted() {
-    document.title = "Thanh toán | Confectio";
+    document.title = "Checkout | Djackets";
 
     this.cart = this.$store.state.cart;
 
@@ -194,7 +198,9 @@ export default {
           if (result.error) {
             this.$store.commit("setIsLoading", false);
 
-            this.errors.push("Có lỗi với Stripe. Vui lòng thử lại");
+            this.errors.push(
+              "Something went wrong with Stripe. Please try again"
+            );
 
             console.log(result.error.message);
           } else {
@@ -236,7 +242,7 @@ export default {
           this.$router.push("/cart/success");
         })
         .catch((error) => {
-          this.errors.push("Có lỗi xảy ra. Vui lòng thử lại.");
+          this.errors.push("Something went wrong. Please try again");
 
           console.log(error);
         });

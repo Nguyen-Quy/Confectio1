@@ -78,7 +78,7 @@ h6 {
 p {
 	font-size: 16px;
 	font-family: "Time New Roman";
-	color: #6f6f6f;
+	color: black;
 	font-weight: 400;
 	line-height: 26px;
 	margin: 0 0 15px 0;
@@ -117,12 +117,32 @@ ol {
 	color: white;
 }
 
+.button_pay {
+	background-color: #7fad39;
+}
+.from_checkout{
+	margin-left: 10px;
+}
 
+.from_checkout .column2{
+	margin-left: 250px;
+}
 
-
-
+.CardField {
+	font-weight: bold;
+}
 
 .Home {
+	background: url("../img/bg.jpg");
+	background-size: cover;
+}
+
+.MyAccount {
+	background: url("../img/bg.jpg");
+	background-size: cover;
+}
+
+.CheckOut {
 	background: url("../img/bg.jpg");
 	background-size: cover;
 }
