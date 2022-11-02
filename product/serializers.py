@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from .models import Category, Product
 
+from .models import Category, Product
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
@@ -15,9 +15,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "get_thumbnail"
         )
 
-
 class CategorySerializer(serializers.ModelSerializer):
-    products = serializers.SerializerMethodField()
+    products = ProductSerializer(many=True)
 
     class Meta:
         model = Category
@@ -27,9 +26,3 @@ class CategorySerializer(serializers.ModelSerializer):
             "get_absolute_url",
             "products",
         )
-
-    def get_products(self, obj):
-        products_query = Product.objects.filter(id=obj.id)
-        serializers = ProductSerializer(products_query, many=True)
-
-        return serializers.data
