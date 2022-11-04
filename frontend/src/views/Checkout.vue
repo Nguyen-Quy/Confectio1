@@ -21,9 +21,9 @@
               <tbody>
                 <tr v-for="item in cart.items" :key="item.product.id">
                   <td>{{ item.product.name }}</td>
-                  <td>${{ item.product.price }}</td>
+                  <td>{{ item.product.price }} VNĐ</td>
                   <td>{{ item.quantity }}</td>
-                  <td>${{ getItemTotal(item).toFixed(2) }}</td>
+                  <td>{{ getItemTotal(item).toFixed(3) }} VNĐ</td>
                 </tr>
               </tbody>
 
@@ -31,7 +31,7 @@
                 <tr>
                   <td colspan="2">Total</td>
                   <td>{{ cartTotalLength }}</td>
-                  <td>${{ cartTotalPrice.toFixed(2) }}</td>
+                  <td>{{ cartTotalPrice.toFixed(3) }} VNĐ</td>
                 </tr>
               </tfoot>
             </table>
@@ -98,7 +98,9 @@
             </div>
 
             <div class="notification is-danger mt-4" v-if="errors.length">
-              <p style="color: red;" v-for="error in errors" :key="error">{{ error }}</p>
+              <p style="color: red" v-for="error in errors" :key="error">
+                {{ error }}
+              </p>
             </div>
 
             <hr />
@@ -142,7 +144,7 @@ export default {
     };
   },
   mounted() {
-    document.title = "Checkout | Djackets";
+    document.title = "Checkout | BK";
 
     this.cart = this.$store.state.cart;
 

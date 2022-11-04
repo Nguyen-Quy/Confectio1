@@ -63,7 +63,7 @@ export default {
     };
   },
   mounted() {
-    document.title = "Log In";
+    document.title = "Sign In";
   },
   methods: {
     async submitForm() {

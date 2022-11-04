@@ -5,7 +5,7 @@
       <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
           <div class="card singup">
-            <h1>Sign Up</h1>
+            <h1>Đăng nhập</h1>
             <form class="form-group" @submit.prevent="submitForm">
               <input
                 v-model="username"
@@ -42,13 +42,13 @@
               />
               <p v-for="error in errors" :key="error">{{ error }}</p>
               <p>
-                Already have an account?
+                Đã có tài khoản?
                 <a
                   href="/log-in"
                   @click="
                     (registerActive = !registerActive), (emptyFields = false)
                   "
-                  >Sign in here</a
+                  >Đăng nhập tại đây</a
                 >
               </p>
             </form>
@@ -73,6 +73,9 @@ export default {
       email: "",
       errors: [],
     };
+  },
+  mounted() {
+    document.title = "Sign Up";
   },
   methods: {
     submitForm() {
@@ -105,7 +108,7 @@ export default {
           .post("/api/v1/users/", formData)
           .then((response) => {
             toast({
-              message: "Account created, please log in!",
+              message: "Đã tạo tài khoản, hãy đăng nhập!",
               type: "is-success",
               dismissible: true,
               pauseOnHover: true,
@@ -125,7 +128,7 @@ export default {
 
               console.log(JSON.stringify(error.response.data));
             } else if (error.message) {
-              this.errors.push("Something went wrong. Please try again");
+              this.errors.push("Có lỗi xảy ra. Vui lòng thử lại.");
 
               console.log(JSON.stringify(error));
             }
