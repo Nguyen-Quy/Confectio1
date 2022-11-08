@@ -17,8 +17,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    products = serializers.SerializerMethodField()
-
     class Meta:
         model = Category
         fields = (
@@ -27,9 +25,3 @@ class CategorySerializer(serializers.ModelSerializer):
             "get_absolute_url",
             "products",
         )
-
-    def get_products(self, obj):
-        products_query = Product.objects.filter(id=obj.id)
-        serializers = ProductSerializer(products_query, many=True)
-
-        return serializers.data

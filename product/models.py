@@ -23,7 +23,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(
-        Category, related_name='category', on_delete=models.CASCADE)
+        Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     slug = AutoSlugField(populate_from=lambda instance: instance.name,
                          slugify=lambda value: value.replace(' ', '-'))
