@@ -1,1 +1,1 @@
-# store_django
+# store_vue
