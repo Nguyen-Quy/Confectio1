@@ -15,7 +15,9 @@ import Password from '../components/Accounts/Password.vue';
 import Order from '../components/Accounts/Order.vue';
 import Checkout from "../views/Checkout.vue";
 import Success from "../views/Success.vue";
-import ForgotPassword from "../views/ForgotPassword.vue";
+import ForgetPassword from '../views/ForgetPassword.vue';
+import PasswordResetConfirm from '../components/PasswordResetConfirm.vue';
+import ResetPasswordDone from '../components/ResetPasswordDone.vue';
 
 const routes = [
   {
@@ -38,11 +40,9 @@ const routes = [
     name: "LogIn",
     component: LogIn,
   },
-  {
-    path: "/forgot-password",
-    name: "ForgotPassword",
-    component: ForgotPassword,
-  },
+  {path: '/forget-password', name: 'ForgetPassword', component: ForgetPassword},
+  {path: '/reset-password/:uid/:token', name: 'PasswordResetConfirm', component: PasswordResetConfirm},
+  {path: '/reset-password-done', name: 'ResetPasswordDone', component: ResetPasswordDone},
   {
     path: "/my-account",
     name: "MyAccount",
