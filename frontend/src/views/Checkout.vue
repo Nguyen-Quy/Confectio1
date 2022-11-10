@@ -98,9 +98,7 @@
             </div>
 
             <div class="notification is-danger mt-4" v-if="errors.length">
-              <p style="color: red" v-for="error in errors" :key="error">
-                {{ error }}
-              </p>
+              <p style="color: red;" v-for="error in errors" :key="error">{{ error }}</p>
             </div>
 
             <hr />

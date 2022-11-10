@@ -12,24 +12,49 @@
         </div>
       </div>
     </section>
-
-    <vueper-slides
-      autoplay
-      fixed-height="300px"
-      :slide-content-outside="bottom"
-      :pause-on-hover="pauseOnHover"
-      @autoplay-pause="internalAutoPlaying = false"
-      @autoplay-resume="internalAutoPlaying = true"
-    >
-      <vueper-slide
-        class="slider"
-        v-for="product in lastestProducts"
-        :key="product.id"
-        :image="product.get_image"
-        :content="product.name"
-      />
-    </vueper-slides>
-
+    <!-- <section class="hero">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-3">
+            <div class="hero__categories">
+              <div class="hero__categories__all">
+                <span>All departments</span>
+              </div>
+              <ul
+                v-for="category in categories"
+                :key="category.id"
+                :category="category"
+              >
+                <li>
+                  <router-link :to="`/shop${category.get_absolute_url}`">{{
+                    category.name
+                  }}</router-link>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="hero__search">
+              <div class="hero__search__form">
+                <form action="#">
+                  <input type="text" placeholder="What do yo u need?" />
+                  <button type="submit" class="site-btn">SEARCH</button>
+                </form>
+              </div>
+            </div>
+            <div class="hero__item set-bg" data-setbg="img/hero/banner.jpg"
+                  style='background-image: url("img/hero/banner.jpg");'>
+              <div class="hero__text">
+                <span>FRUIT FRESH</span>
+                <h2>Vegetable <br />100% Organic</h2>
+                <p>Free Pickup and Delivery Available</p>
+                <a href="#" class="primary-btn">SHOP NOW</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section> -->
     <section class="featured spad">
       <div class="container">
         <div class="row">
@@ -48,17 +73,15 @@
         </div>
       </div>
     </section>
-    <section class="section">
-      <router-view />
-    </section>
+    <!-- <section class="section">
+      <router-view name="Component"></router-view>
+    </section> -->
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import FeaturedProduct from "@/components/FeaturedProduct";
-import { VueperSlides, VueperSlide } from "vueperslides";
-import "vueperslides/dist/vueperslides.css";
 
 export default {
   name: "Home",
@@ -70,8 +93,6 @@ export default {
   },
   components: {
     FeaturedProduct,
-    VueperSlides,
-    VueperSlide,
   },
   mounted() {
     this.getLastestProducts();
@@ -106,43 +127,6 @@ export default {
         });
       this.$store.commit("setIsLoading", false);
     },
-    async getloadCategories() {
-      this.$store.commit("setIsLoading", true);
-      await axios
-        .get(`/api/v1/categories/`)
-        .then((response) => {
-          this.categories = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      this.$store.commit("setIsLoading", false);
-    },
   },
 };
 </script>
-<style>
-.image-height {
-  max-height: 300px;
-  width: 100%;
-}
-.vueperslide__content {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  padding: 4px 25px;
-  background: orange;
-  color: #fff;
-  font-size: 18px;
-  box-shadow: 0 0 9px rgba(0, 0, 0, 0.2);
-}
-
-.vueperslide,
-.vueperslide__image {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% 200%;
-}
-</style>

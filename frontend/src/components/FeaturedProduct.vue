@@ -6,18 +6,18 @@
           class="featured__item__pic set-bg"
           :data-setbg="product.get_absolute_url"
           :style="{ 'background-image': 'url(' + product.get_thumbnail + ')' }"
-        ></div>
+        >
+        </div>
         <div class="featured__item__text">
           <h6>
             <a href="#">{{ product.name }}</a>
           </h6>
-          <h5>Giá: {{ product.price }} VNĐ</h5>
+          <h5>Giá: {{ product.price }} </h5>
         </div>
       </router-link>
     </div>
   </div>
-  <router-view />
-  <router-view />
+  <router-view/>
 </template>
 
 <script>
@@ -25,6 +25,6 @@ export default {
   name: "FeaturedProduct",
   props: {
     product: Object,
-  },
+  }
 };
 </script>
