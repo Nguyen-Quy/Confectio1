@@ -21,7 +21,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-j01k=t!hyj6s=bon1w&+kidbg5wwsg3hcqg5tv5@j_=0(a0tg&'
+SECRET_KEY = 'f_)*$6xz#a7k(6ir&u@+tq8h@_t_9%3nr%9g5z4vdp#*a4)a*o'
+
+# SECURITY WARNING: keep the secret key used in production secret!
+STRIPE_SECRET_KEY = 'sk_test_51LseHJJrgRKxls7zYgJAfoYDpt4BU3PIf6YeqdIJOfCZHCqRUsKsok4D4tcoe3RpVo1ONvpbMLSQgfLs12nuOMXe00oFnjtj0n'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,34 +42,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.humanize',
+    'django_filters',
 
     'rest_framework',
     'rest_framework.authtoken',
-    'corsheaders',
     'djoser',
-    'core',
-    'cart',
+    'corsheaders',
+    # 'core',
+    # 'cart',
     'product',
-    'orders',
-    'register',
+    'order',
+
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8081",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-PASSWORD_HASHERS = [
-    'django.contrib.auth.hashers.Argon2PasswordHasher',
-    'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2PasswordHasher',
-    'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
 ]
 
 ROOT_URLCONF = 'confectio.urls'
@@ -95,8 +96,8 @@ WSGI_APPLICATION = 'confectio.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "confectiodb",
     }
 }
 
@@ -145,6 +146,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

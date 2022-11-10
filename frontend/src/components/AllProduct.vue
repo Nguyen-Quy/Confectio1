@@ -3,7 +3,7 @@
     <div class="product__item">
       <router-link :to="product.get_absolute_url" class="latest-product__item">
         <div class="product__item__pic set-bg">
-          <img :src="product.get_thumbnail" />
+          <img :src="product.get_thumbnail">
         </div>
         <div class="product__item__text">
           <h6>
@@ -16,8 +16,7 @@
       </router-link>
     </div>
   </div>
-  <router-view />
-  <router-view />
+  <router-view/>
 </template>
 
 <script>

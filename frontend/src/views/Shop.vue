@@ -92,7 +92,7 @@
                 <div class="latest-product__text">
                   <h4>Latest Products</h4>
                   <LastestProduct
-                    v-for="product in lastProducts"
+                    v-for="product in latestProducts"
                     :key="product.id"
                     :product="product"
                   />
@@ -134,19 +134,13 @@
                 :product="product"
               />
             </div>
-            <div class="product__pagination">
-              <a href="#">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-            </div>
           </div>
         </div>
       </div>
     </section>
     <!-- Product Section End -->
   </div>
-  <router-view />
+  <router-view/>
 </template>
 
 <script>
@@ -160,7 +154,7 @@ export default {
   data() {
     return {
       allProducts: [],
-      lastProducts: [],
+      latestProducts: [],
       categories: [],
     };
   },
@@ -193,9 +187,9 @@ export default {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get("/api/v1/latest-products/")
+        .get(`/api/v1/products/latest/`)
         .then((response) => {
-          this.lastProducts = response.data;
+          this.latestProducts = response.data;
         })
         .catch((error) => {
           console.log(error);
@@ -218,3 +212,29 @@ export default {
   },
 };
 </script>
+<style>
+.pagination-container {
+  display: flex;
+  column-gap: 10px;
+}
+.paginate-buttons {
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  background-color: rgb(242, 242, 242);
+  border: 1px solid rgb(217, 217, 217);
+  color: black;
+}
+.paginate-buttons:hover {
+  background-color: #d8d8d8;
+}
+.active-page {
+  background-color: #3498db;
+  border: 1px solid #3498db;
+  color: white;
+}
+.active-page:hover {
+  background-color: #2988c8;
+}
+</style>

@@ -1,48 +1,47 @@
 from django.db.models import Q
-from django.shortcuts import render
-from rest_framework.views import APIView
+from django.http import Http404, HttpRequest
+
+# from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
+from rest_framework import status
 from rest_framework.response import Response
-from django.http import Http404
 from rest_framework.decorators import api_view
 
 from .models import Product, Category
 from .serializers import ProductSerializer, CategorySerializer
 
 
-class LatestProductsList(APIView):
-    def get(self, request, format=None):
-        products = Product.objects.all()[0:4]
-        serializer = ProductSerializer(products, many=True)
+class ProductViewSet(ModelViewSet):
+    queryset = Product.objects.all()
+    category_queryset = Category.objects.all()
+    serializer_class = ProductSerializer
+    http_method_names = ['get', ]
+    lookup_field = 'slug'
+
+    @action(detail=False, methods=['get'], url_path='latest',)
+    def latest_product(self, request, format=None):
+        latest = self.get_queryset().order_by('-date_added')
+        # serializer = self.get_serializer_class()(latest)
+        serializer = ProductSerializer(latest, many=True)
         return Response(serializer.data)
 
 
-class ProductDetail(APIView):
-    def get_object(self, category_slug, product_slug):
-        try:
-            return Product.objects.filter(category__slug=category_slug).get(slug=product_slug)
-        except Product.DoesNotExist:
-            raise Http404
+class CategoryViewSet(ModelViewSet):
+    queryset = Category.objects.all()
+    product_queryset = Product.objects.all()
+    serializer_class = CategorySerializer
+    http_method_names = ['get', ]
+    lookup_field = 'slug'
 
-    def get(self, request, category_slug, product_slug, format=None):
-        product = self.get_object(category_slug, product_slug)
+    @action(detail=True, methods=['get'], url_path='(?P<product_slug>[^/.]+)')
+    def get_product_detail(self, request, slug, product_slug):
+        product = Product.objects.get(category__slug=slug, slug=product_slug)
         serializer = ProductSerializer(product)
         return Response(serializer.data)
 
 
-class CategoryDetail(APIView):
-    def get_object(self, category_slug):
-        try:
-            return Category.objects.get(slug=category_slug)
-        except Category.DoesNotExist:
-            raise Http404
-
-    def get(self, request, category_slug, format=None):
-        category = self.get_object(category_slug)
-        serializer = CategorySerializer(category)
-        return Response(serializer.data)
-
-
-@api_view(['POST'])
+@ api_view(['POST'])
 def search(request):
     query = request.data.get('query', '')
 
