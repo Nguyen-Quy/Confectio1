@@ -31,6 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+port_thumbnail = "7777"
 
 # Application definition
 
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     # 'cart',
     'product',
     'order',
+    "account",
 
 ]
 
@@ -124,11 +126,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "Asia/Saigon"
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
@@ -162,3 +166,10 @@ EMAIL_HOST_PASSWORD = 'xxxxxx'
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
+
+APPEND_SLASH=False
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
