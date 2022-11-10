@@ -23,6 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-j01k=t!hyj6s=bon1w&+kidbg5wwsg3hcqg5tv5@j_=0(a0tg&'
 
+STRIPE_SECRET_KEY = 'sk_test_51LseHJJrgRKxls7zYgJAfoYDpt4BU3PIf6YeqdIJOfCZHCqRUsKsok4D4tcoe3RpVo1ONvpbMLSQgfLs12nuOMXe00oFnjtj0n'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -39,20 +41,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
-    'django.contrib.humanize',
+    'django_filters',
 
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
     'djoser',
-    'core',
-    'cart',
+
     'product',
     'orders',
-    'register',
 ]
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8081",
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -95,8 +96,8 @@ WSGI_APPLICATION = 'confectio.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "confectiodb",
     }
 }
 

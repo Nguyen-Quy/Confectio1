@@ -8,28 +8,40 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = (
             "id",
             "name",
+            "slug",
             "get_absolute_url",
             "description",
             "price",
             "get_image",
-            "get_thumbnail"
+            "get_thumbnail",
+            "date_added",
         )
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    products = serializers.SerializerMethodField()
+    # products = serializers.SerializerMethodField()
+    products = ProductSerializer(many=True)
 
     class Meta:
         model = Category
         fields = (
             "id",
             "name",
+            "slug",
             "get_absolute_url",
             "products",
         )
+        lookup_field = 'slug'
+        extra_kwargs = {
+            'url': {'lookup_field': 'slug'}
+        }
 
-    def get_products(self, obj):
-        products_query = Product.objects.filter(id=obj.id)
-        serializers = ProductSerializer(products_query, many=True)
+    # def get_products(self, obj):
+    #     products_query = Product.objects.filter(id=obj.id)
+    #     serializers = ProductSerializer(products_query, many=True)
 
-        return serializers.data
+    #     return serializers.data

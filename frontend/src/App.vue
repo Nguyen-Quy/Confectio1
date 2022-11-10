@@ -13,14 +13,14 @@
       <div class="row">
         <div class="col-lg-5">
           <div class="header__logo">
-            <a href="/"><img src="../src/assets/img/logo.png" alt="" /></a>
+            <a href="/"><img src="../src/assets/img/logo.png" alt=""/></a>
           </div>
         </div>
 
         <div class="col-lg-7">
           <nav class="header__menu">
             <ul>
-              <li class="active"><router-link to="/">Home</router-link></li>
+              <li><router-link to="/">Home</router-link></li>
               <li><router-link to="/shop">Product</router-link></li>
               <li>
                 <router-link to="/cart">

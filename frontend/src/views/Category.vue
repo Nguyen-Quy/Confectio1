@@ -44,7 +44,7 @@
               <div class="sidebar__item">
                 <h4>Categories</h4>
                 <ul>
-                  <li><router-link :to="`/shop`">All</router-link></li>
+                    <li><router-link :to="`/shop`">All</router-link></li>
                 </ul>
                 <ul
                   v-for="category in categories"
@@ -112,9 +112,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4">
                   <div class="filter__found">
-                    <h6>
-                      <span>{{ category.products.length }}</span> Products found
-                    </h6>
+                    <h6><span>{{category.products.length}}</span> Products found</h6>
                   </div>
                 </div>
                 <div class="col-lg-4 col-md-3">
@@ -167,16 +165,10 @@ export default {
       allProducts: [],
       lastProducts: [],
       categories: [],
-      allProducts: [],
-      lastProducts: [],
-      categories: [],
     };
   },
   mounted() {
     this.getCategory();
-    this.getAllProducts();
-    this.getLastProducts();
-    this.getloadCategories();
     this.getAllProducts();
     this.getLastProducts();
     this.getloadCategories();
@@ -191,82 +183,42 @@ export default {
   methods: {
     async getAllProducts() {
       this.$store.commit("setIsLoading", true);
-
+      
       await axios
-        .get(`/api/v1/products/`)
-        .then((response) => {
-          this.allProducts = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
+      .get(`/api/v1/products/`)
+      .then((response) => {
+        this.allProducts = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
       this.$store.commit("setIsLoading", false);
     },
     async getLastProducts() {
       this.$store.commit("setIsLoading", true);
-
+      
       await axios
-        .get("/api/v1/latest-products/")
-        .then((response) => {
-          this.lastProducts = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
+      .get("/api/v1/products/latest/")
+      .then((response) => {
+        this.lastProducts = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+      
       this.$store.commit("setIsLoading", false);
     },
     async getloadCategories() {
       this.$store.commit("setIsLoading", true);
       await axios
-        .get(`/api/v1/categories/`)
-        .then((response) => {
-          this.categories = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-      this.$store.commit("setIsLoading", false);
-    },
-    async getAllProducts() {
-      this.$store.commit("setIsLoading", true);
-
-      await axios
-        .get(`/api/v1/products/`)
-        .then((response) => {
-          this.allProducts = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      this.$store.commit("setIsLoading", false);
-    },
-    async getLastProducts() {
-      this.$store.commit("setIsLoading", true);
-
-      await axios
-        .get("/api/v1/latest-products/")
-        .then((response) => {
-          this.lastProducts = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      this.$store.commit("setIsLoading", false);
-    },
-    async getloadCategories() {
-      this.$store.commit("setIsLoading", true);
-      await axios
-        .get(`/api/v1/categories/`)
-        .then((response) => {
-          this.categories = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      .get(`/api/v1/categories/`)
+      .then((response) => {
+        this.categories = response.data;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
       this.$store.commit("setIsLoading", false);
     },
     async getCategory() {

@@ -16,17 +16,17 @@
     <vueper-slides
       autoplay
       fixed-height="300px"
-      :slide-content-outside="bottom"
       :pause-on-hover="pauseOnHover"
       @autoplay-pause="internalAutoPlaying = false"
       @autoplay-resume="internalAutoPlaying = true"
     >
       <vueper-slide
         class="slider"
-        v-for="product in lastestProducts"
+        v-for="product in latestProducts"
         :key="product.id"
         :image="product.get_image"
         :content="product.name"
+        :link="product.get_absolute_url"
       />
     </vueper-slides>
 
@@ -35,13 +35,13 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
-              <h2>Lastest Product</h2>
+              <h2>Latest Product</h2>
             </div>
           </div>
         </div>
         <div class="row featured__filter" id="MixItUp556786" style="">
           <FeaturedProduct
-            v-for="product in lastestProducts"
+            v-for="product in latestProducts"
             :key="product.id"
             :product="product"
           />
@@ -64,7 +64,7 @@ export default {
   name: "Home",
   data() {
     return {
-      lastestProducts: [],
+      latestProducts: [],
       categories: [],
     };
   },
@@ -74,36 +74,24 @@ export default {
     VueperSlide,
   },
   mounted() {
-    this.getLastestProducts();
+    this.getLatestProducts();
     this.getloadCategories();
 
     document.title = "Home | BK";
   },
   methods: {
-    async getLastestProducts() {
+    async getLatestProducts() {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get("/api/v1/latest-products/")
+        .get(`/api/v1/products/latest/`)
         .then((response) => {
-          this.lastestProducts = response.data;
+          this.latestProducts = response.data;
         })
         .catch((error) => {
           console.log(error);
         });
 
-      this.$store.commit("setIsLoading", false);
-    },
-    async getloadCategories() {
-      this.$store.commit("setIsLoading", true);
-      await axios
-        .get(`/api/v1/categories/`)
-        .then((response) => {
-          this.categories = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
       this.$store.commit("setIsLoading", false);
     },
     async getloadCategories() {
@@ -125,6 +113,9 @@ export default {
 .image-height {
   max-height: 300px;
   width: 100%;
+}
+.vueperslides__arrow {
+  color: black;
 }
 .vueperslide__content {
   position: absolute;
