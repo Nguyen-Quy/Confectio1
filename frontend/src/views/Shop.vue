@@ -134,13 +134,25 @@
                 :product="product"
               />
             </div>
+            <ul class="pagination">
+              <li>
+                <button aria-label="Previous" @click="loadPrev()">
+                  <i class="fa fa-long-arrow-left"></i>
+                </button>
+              </li>
+              <li>
+                <button aria-label="Next" @click="loadNext()">
+                  <i class="fa fa-long-arrow-right"></i>
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </section>
     <!-- Product Section End -->
   </div>
-  <router-view/>
+  <router-view />
 </template>
 
 <script>
@@ -156,6 +168,8 @@ export default {
       allProducts: [],
       latestProducts: [],
       categories: [],
+
+      currentPage: 1,
     };
   },
   components: {
@@ -163,17 +177,28 @@ export default {
     LastestProduct,
   },
   mounted() {
-    this.getAllProducts(),
-      this.getLastProducts(),
-      this.getloadCategories(),
-      (document.title = "Shop | BK");
+    this.getAllProducts();
+    this.getLastProducts();
+    this.getloadCategories();
+    
+    (document.title = "Shop | BK");
   },
   methods: {
+    loadNext() {
+      this.currentPage += 1;
+      this.getAllProducts();
+      this.$router.push(`/shop/?page=${this.currentPage}`);
+    },
+    loadPrev() {
+      this.currentPage -= 1;
+      this.getAllProducts();
+      this.$router.push(`/shop/?page=${this.currentPage}`);
+    },
     async getAllProducts() {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get(`/api/v1/products/`)
+        .get(`/api/v1/products/allproducts/?page=${this.currentPage}`)
         .then((response) => {
           this.allProducts = response.data;
         })
@@ -187,7 +212,7 @@ export default {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get(`/api/v1/products/latest/`)
+        .get(`/api/v1/products/lastest/`)
         .then((response) => {
           this.latestProducts = response.data;
         })

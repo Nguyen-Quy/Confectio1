@@ -77,7 +77,7 @@ const routes = [
     },
   },
   {
-    path: "/:category_slug/:product_slug",
+    path: "/shop/:category_slug/:product_slug",
     name: "Product",
     component: Product,
   },

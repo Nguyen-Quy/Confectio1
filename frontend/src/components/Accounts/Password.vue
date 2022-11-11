@@ -10,7 +10,7 @@
           <div class="profile-tab-nav border-right">
             <div class="p-4">
               <div class="img-circle text-center mb-3">
-                <img src="./avatar.png" alt="Image" class="shadow" />
+                <img src="./avatar.png" alt="Image" class="shadow-img" />
               </div>
               <h4 class="text-center"></h4>
             </div>

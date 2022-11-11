@@ -1,7 +1,7 @@
 <template>
   <div class="latest-product__slider owl-carousel">
     <div class="latest-prdouct__slider__item">
-      <router-link :to="product.get_absolute_url" class="latest-product__item">
+      <router-link :to="`/shop${product.get_absolute_url}`" class="latest-product__item">
         <div class="latest-product__item__pic">
           <img :src="product.get_thumbnail" />
         </div>

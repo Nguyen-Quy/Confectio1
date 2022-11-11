@@ -10,7 +10,7 @@
           <div class="profile-tab-nav border-right">
             <div class="p-4">
               <div class="img-circle text-center mb-3">
-                <img src="../assets/img/avatar.png" alt="Image" class="shadow" />
+                <img src="../assets/img/avatar.png" alt="Image" class="shadow-img" />
               </div>
               <h4 class="text-center"></h4>
             </div>
@@ -59,52 +59,43 @@
             </div>
           </div>
           <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
-            <div
+            <form
               class="tab-pane fade show active"
               id="account"
               role="tabpanel"
               aria-labelledby="account-tab"
+              @submit.prevent="submitForm"
             >
               <h3 class="mb-4">Account Settings</h3>
               <div class="row">
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>First Name</label>
-                    <input type="text" class="form-control" value="" />
+                    <input v-model="first_name" type="text" class="form-control" />
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Last Name</label>
-                    <input type="text" class="form-control" value="" />
+                    <input v-model="last_name" type="text" class="form-control"/>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Email</label>
                     <input
+                      v-model="email"
                       type="text"
                       class="form-control"
-                      value=""
-                    />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Phone number</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      value=""
                     />
                   </div>
                 </div>
               </div>
+              <p v-for="error in errors" :key="error">{{ error }}</p>
               <div>
-                <button class="btn btn-primary">Update</button>
-                <button class="btn btn-light">Cancel</button>
+                <input type="submit" class="btn btn-primary">
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -127,6 +118,9 @@ export default {
   data() {
     return {
       orders: [],
+      first_name: "",
+      last_name: "",
+      email: ""
     };
   },
   mounted() {
@@ -146,6 +140,7 @@ export default {
 
       this.$router.push("/");
     },
+
     async getMyOrders() {
       this.$store.commit("setIsLoading", true);
 
@@ -160,6 +155,50 @@ export default {
 
       this.$store.commit("setIsLoading", false);
     },
+    submitForm() {
+      this.errors = [];
+
+
+      if (this.first_name === "") {
+        this.errors.push("The first name No empty ");
+      }
+
+      if (this.last_name === "") {
+        this.errors.push("The last name No empty");
+      }
+      if (this.email === "") {
+        this.errors.push("The email No empty");
+      }
+
+      if (!this.errors.length) {
+        const formData = {
+          first_name: this.first_name,
+          last_name: this.last_name,
+          email: this.email,
+        };
+
+        axios
+          .post(`/api/v1/users/edit-profile/`, formData)
+          .then((response) => {
+
+          })
+          .catch((error) => {
+            if (error.response) {
+              for (const property in error.response.data) {
+                this.errors.push(
+                  `${property}: ${error.response.data[property]}`
+                );
+              }
+
+              console.log(JSON.stringify(error.response.data));
+            } else if (error.message) {
+              this.errors.push("Something went wrong. Please try again");
+
+              console.log(JSON.stringify(error));
+            }
+          });
+        }
+      }
   },
 };
 </script>

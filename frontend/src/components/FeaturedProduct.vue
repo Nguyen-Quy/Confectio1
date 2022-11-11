@@ -1,7 +1,7 @@
 <template>
-  <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat" style="">
+  <div class="col-lg-4 col-md-4 col-sm-6 mix oranges fresh-meat" style="">
     <div class="featured__item">
-      <router-link :to="product.get_absolute_url" class="latest-product__item">
+      <router-link :to="`/shop${product.get_absolute_url}`" class="latest-product__item">
         <div
           class="featured__item__pic set-bg"
           :data-setbg="product.get_absolute_url"

@@ -130,12 +130,18 @@
                 :product="product"
               />
             </div>
-            <div class="product__pagination">
-              <a href="#">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-            </div>
+            <ul class="pagination">
+              <li>
+                <button aria-label="Previous" @click="loadPrev()">
+                  <i class="fa fa-long-arrow-left"></i>
+                </button>
+              </li>
+              <li>
+                <button aria-label="Next" @click="loadNext()">
+                  <i class="fa fa-long-arrow-right"></i>
+                </button>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -162,44 +168,43 @@ export default {
       category: {
         products: [],
       },
-      allProducts: [],
       lastProducts: [],
       categories: [],
+
+      currentPage: 1,
     };
   },
   mounted() {
-    this.getCategory();
-    this.getAllProducts();
+    this.getProductByCategory();
     this.getLastProducts();
     this.getloadCategories();
   },
   watch: {
     $route(to, from) {
       if (to.name === "Category") {
-        this.getCategory();
+        this.getProductByCategory();
       }
     },
   },
   methods: {
-    async getAllProducts() {
-      this.$store.commit("setIsLoading", true);
-      
-      await axios
-      .get(`/api/v1/products/`)
-      .then((response) => {
-        this.allProducts = response.data;
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-      
-      this.$store.commit("setIsLoading", false);
+    loadNext() {
+      const categorySlug = this.$route.params.category_slug;
+      this.currentPage += 1;
+      this.getProductByCategory();
+      this.$router.push(`/shop/${categorySlug}/?page=${this.currentPage}`)
+    },
+    
+    loadPrev() {
+      const categorySlug = this.$route.params.category_slug;
+      this.currentPage -= 1;
+      this.getProductByCategory();
+      this.$router.push(`/shop/${categorySlug}/?page=${this.currentPage}`)
     },
     async getLastProducts() {
       this.$store.commit("setIsLoading", true);
       
       await axios
-      .get("/api/v1/products/latest/")
+      .get("/api/v1/products/lastest/")
       .then((response) => {
         this.lastProducts = response.data;
       })
@@ -221,13 +226,13 @@ export default {
       });
       this.$store.commit("setIsLoading", false);
     },
-    async getCategory() {
+    async getProductByCategory() {
       const categorySlug = this.$route.params.category_slug;
 
       this.$store.commit("setIsLoading", true);
 
       axios
-        .get(`/api/v1/products/${categorySlug}/`)
+        .get(`/api/v1/categories/${categorySlug}/?page=${this.currentPage}`)
         .then((response) => {
           this.category = response.data;
 

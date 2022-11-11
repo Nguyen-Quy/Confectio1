@@ -1,7 +1,7 @@
 <template>
   <div class="col-lg-4 col-md-6 col-sm-6">
     <div class="product__item">
-      <router-link :to="product.get_absolute_url" class="latest-product__item">
+      <router-link :to="`/shop${product.get_absolute_url}`" class="latest-product__item">
         <div class="product__item__pic set-bg">
           <img :src="product.get_thumbnail">
         </div>

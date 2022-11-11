@@ -111,6 +111,60 @@ ol {
 /*---------------------
   Helper CSS
 -----------------------*/
+
+.fa-shopping-cart{
+	font-size: 30px;
+}
+.cart-drawer{
+	display: flex;
+}
+.cart-number-badge{
+	top: 8px;
+	left: 7px;
+	position: relative;
+	border-radius: 2.75rem;
+	padding: 0 0.3125rem;
+}
+
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+body {
+	background: #f9f9f9;
+	font-family: "Roboto", sans-serif;
+}
+
+.shadow {
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+.profile-tab-nav {
+	min-width: 250px;
+}
+
+.tab-content {
+	flex: 1;
+}
+
+.form-group {
+	margin-bottom: 1.5rem;
+}
+
+.nav-pills a.nav-link {
+	padding: 15px 20px;
+	border-bottom: 1px solid #ddd;
+	border-radius: 0;
+	color: #333;
+}
+.nav-pills a.nav-link i {
+	width: 20px;
+}
+
+.img-circle img {
+	height: 100px;
+	width: 100px;
+	border-radius: 100%;
+	border: 5px solid #fff;
+}
+
 .control button {
 	margin-top: 10px;
 	background-color: #7fad39;
@@ -616,9 +670,22 @@ h1 {
 	display: block;
 }
 
+.header__cart ul li a {
+	color: #252525;
+	text-transform: uppercase;
+	font-weight: 700;
+	letter-spacing: 2px;
+	-webkit-transition: all, 0.3s;
+	-moz-transition: all, 0.3s;
+	-ms-transition: all, 0.3s;
+	-o-transition: all, 0.3s;
+	transition: all, 0.3s;
+	padding: 5px 0;
+	display: block;
+}
+
 .header__cart {
 	text-align: right;
-	padding: 24px 0;
 }
 
 .header__cart ul {

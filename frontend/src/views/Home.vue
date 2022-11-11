@@ -22,11 +22,11 @@
     >
       <vueper-slide
         class="slider"
-        v-for="product in latestProducts"
+        v-for="product in lastestProducts"
         :key="product.id"
         :image="product.get_image"
         :content="product.name"
-        :link="product.get_absolute_url"
+        :link="`/shop${product.get_absolute_url}`"
       />
     </vueper-slides>
 
@@ -35,13 +35,13 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
-              <h2>Latest Product</h2>
+              <h2>Lastest Product</h2>
             </div>
           </div>
         </div>
-        <div class="row featured__filter" id="MixItUp556786" style="">
+        <div class="row featured__filter" id="MixItUp556786">
           <FeaturedProduct
-            v-for="product in latestProducts"
+            v-for="product in lastestProducts"
             :key="product.id"
             :product="product"
           />
@@ -64,7 +64,7 @@ export default {
   name: "Home",
   data() {
     return {
-      latestProducts: [],
+      lastestProducts: [],
       categories: [],
     };
   },
@@ -74,19 +74,19 @@ export default {
     VueperSlide,
   },
   mounted() {
-    this.getLatestProducts();
+    this.getLastestProducts();
     this.getloadCategories();
 
     document.title = "Home | BK";
   },
   methods: {
-    async getLatestProducts() {
+    async getLastestProducts() {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get(`/api/v1/products/latest/`)
+        .get(`/api/v1/products/lastest/`)
         .then((response) => {
-          this.latestProducts = response.data;
+          this.lastestProducts = response.data;
         })
         .catch((error) => {
           console.log(error);
