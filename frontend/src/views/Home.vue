@@ -18,16 +18,14 @@
       fixed-height="300px"
       :pause-on-hover="pauseOnHover"
       @autoplay-pause="internalAutoPlaying = false"
-      @autoplay-resume="internalAutoPlaying = true"
-    >
+      @autoplay-resume="internalAutoPlaying = true">
       <vueper-slide
         class="slider"
         v-for="product in lastestProducts"
         :key="product.id"
         :image="product.get_image"
         :content="product.name"
-        :link="`/shop${product.get_absolute_url}`"
-      />
+        :link="`/shop${product.get_absolute_url}`" />
     </vueper-slides>
 
     <section class="featured spad">
@@ -43,8 +41,7 @@
           <FeaturedProduct
             v-for="product in lastestProducts"
             :key="product.id"
-            :product="product"
-          />
+            :product="product" />
         </div>
       </div>
     </section>
@@ -84,11 +81,11 @@ export default {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get(`/api/v1/products/lastest/`)
-        .then((response) => {
+        .get(`/api/v1/products/latest/`)
+        .then(response => {
           this.lastestProducts = response.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
 
@@ -98,10 +95,10 @@ export default {
       this.$store.commit("setIsLoading", true);
       await axios
         .get(`/api/v1/categories/`)
-        .then((response) => {
+        .then(response => {
           this.categories = response.data;
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
       this.$store.commit("setIsLoading", false);

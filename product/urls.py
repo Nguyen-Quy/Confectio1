@@ -17,5 +17,5 @@ urlpatterns = [
     # path('products/<slug:category_slug>/', views.CategoryDetailSlug.as_view()),
 ]+router.urls
 
-# for url in router.urls:
-#     print(url, '\n')
+for url in router.urls:
+    print(url, '\n')
