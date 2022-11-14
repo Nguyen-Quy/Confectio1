@@ -3,19 +3,24 @@ from django.http import Http404, HttpRequest
 
 # from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
 
 from .models import Product, Category
 from .serializers import ProductSerializer, CategorySerializer
+from django.core.paginator import EmptyPage, Paginator, PageNotAnInteger
+from rest_framework.pagination import PageNumberPagination
+
+
+class ProductPagination(PageNumberPagination):
+    page_size = 9
 
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
-    category_queryset = Category.objects.all()
     serializer_class = ProductSerializer
+    pagination_class = ProductPagination
     http_method_names = ['get', ]
     lookup_field = 'slug'
 
