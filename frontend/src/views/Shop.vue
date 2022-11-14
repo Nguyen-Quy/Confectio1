@@ -63,7 +63,7 @@
               <div class="sidebar__item">
                 <div class="latest-product__text">
                   <h4>Latest Products</h4>
-                  <LastestProduct
+                  <LatestProduct
                     v-for="product in latestProducts"
                     :key="product.id"
                     :product="product"
@@ -116,7 +116,7 @@
 import axios from "axios";
 
 import AllProduct from "@/components/AllProduct";
-import LastestProduct from "@/components/LastestProduct";
+import LatestProduct from "@/components/LatestProduct";
 
 export default {
   name: "ShopPage",
@@ -131,11 +131,11 @@ export default {
   },
   components: {
     AllProduct,
-    LastestProduct,
+    LatestProduct,
   },
   mounted() {
     this.getAllProducts();
-    this.getLastProducts();
+    this.getLatProducts();
     this.getloadCategories();
     
     (document.title = "Shop | BK");
@@ -165,11 +165,11 @@ export default {
 
       this.$store.commit("setIsLoading", false);
     },
-    async getLastProducts() {
+    async getLatProducts() {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get(`/api/v1/products/lastest/`)
+        .get(`/api/v1/products/latest/`)
         .then((response) => {
           this.latestProducts = response.data;
         })

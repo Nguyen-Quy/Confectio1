@@ -61,8 +61,8 @@
               <div class="sidebar__item">
                 <div class="latest-product__text">
                   <h4>Latest Products</h4>
-                  <LastestProduct
-                    v-for="product in lastProducts"
+                  <LatestProduct
+                    v-for="product in latProducts"
                     :key="product.id"
                     :product="product"
                   />
@@ -112,20 +112,20 @@ import axios from "axios";
 import { toast } from "bulma-toast";
 
 import AllProduct from "@/components/AllProduct";
-import LastestProduct from "@/components/LastestProduct";
+import LatestProduct from "@/components/LatestProduct";
 
 export default {
   name: "Category",
   components: {
     AllProduct,
-    LastestProduct,
+    LatestProduct,
   },
   data() {
     return {
       category: {
         products: [],
       },
-      lastProducts: [],
+      latProducts: [],
       categories: [],
 
       currentPage: 1,
@@ -133,7 +133,7 @@ export default {
   },
   mounted() {
     this.getProductByCategory();
-    this.getLastProducts();
+    this.getLatProducts();
     this.getloadCategories();
   },
   watch: {
@@ -157,13 +157,13 @@ export default {
       this.getProductByCategory();
       this.$router.push(`/shop/${categorySlug}/?page=${this.currentPage}`)
     },
-    async getLastProducts() {
+    async getLatProducts() {
       this.$store.commit("setIsLoading", true);
       
       await axios
-      .get("/api/v1/products/lastest/")
+      .get("/api/v1/products/latest/")
       .then((response) => {
-        this.lastProducts = response.data;
+        this.latProducts = response.data;
       })
       .catch((error) => {
         console.log(error);
