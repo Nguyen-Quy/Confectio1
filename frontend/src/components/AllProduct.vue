@@ -1,33 +1,43 @@
+
 <template>
   <div class="col-lg-4 col-md-6 col-sm-6">
-    <div class="product__item">
-      <router-link :to="product.get_absolute_url" class="latest-product__item">
-        <div class="product__item__pic set-bg">
-          <img :src="product.get_thumbnail" merge-image="center">
+    <div class="product">
+      <div class="product-inner">
+        <div class="img-container">
+          <div class="product-image-wrap">
+            <img :src="product.get_thumbnail" class="image">
+            <div class="overlay">
+              <button class="btn btn-outline-secondary btn-sm" @click="addToCart()"><i class="fas fa-cart-plus mr-2" ></i>Add To Cart</button>
+              <router-link :to="product.get_absolute_url" class="product__item">
+                <button class="btn btn-outline-secondary btn-sm">Product Details</button>
+              </router-link>
+            </div>
+          </div>
         </div>
-        <div class="product__item__text">
-          <h6>
-            <router-link :to="product.get_absolute_url">{{
-              product.name
-            }}</router-link>
-          </h6>
-          <h5>Giá: {{ product.price }} VNĐ</h5>
-        </div>
-      </router-link>
-        <div class="button-group">
-          <button class="button" @click="addToCart()">Add to cart</button>
-            <router-link :to="product.get_absolute_url" class="product__item">
-              <button class="button">Product Details</button>
-            </router-link>
-        </div>
+      </div>
+      <div class="product__item__text">
+        <h6>
+          <router-link :to="product.get_absolute_url">{{
+            product.name
+          }}</router-link>
+        </h6>
+        <h5>Giá: {{ product.price }} VNĐ</h5>
+      </div>
+          <!-- <div class="button-group">
+            <button class="button" @click="addToCart()">Add to cart</button>
+              <router-link :to="product.get_absolute_url" class="product__item">
+                <button class="button">Product Details</button>
+              </router-link>
+          </div> -->
+      </div>  
     </div>
-  </div>
   <router-view/>  
 </template>
 
 import 
 
 <script>
+
 export default {
   name: "AllProduct",
   props: {
@@ -66,13 +76,14 @@ export default {
                 position: 'bottom-right',
             })
         }
+        
   },
 
 };
 </script>
 
 <style scoped>
-  .button {
+  /* .button {
     position: center;
     display: inline-block;
     margin: 0em 1;
@@ -90,10 +101,45 @@ export default {
     text-transform: uppercase;
     cursor:pointer;
     transition: 0.3s;
-  }
+  } */
+.img-container{
+  position: relative;
+}
 
-  .button:hover {
-    background: tomato;
-    color: #fff;
-  }
+.image{
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.overlay{
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%,50%);
+}
+
+.img-container:hover .image{
+  opacity: 0.2;
+}
+
+.img-container:hover .overlay{
+  opacity: 1;
+}
+
+.product{
+  flex: 1 1 33.333%;
+  width: 100%;
+  padding: 10px;
+}
+.product-inner{
+  position: relative;
+  padding: 25px;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+}
+
+.product-image-wrap .image{
+  width: 100%;
+}
 </style>
