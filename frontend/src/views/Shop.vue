@@ -9,7 +9,8 @@
               <input
                 type="text"
                 placeholder="What do yo u need?"
-                name="query" />
+                name="query"
+              />
               <button type="submit" class="site-btn">SEARCH</button>
             </form>
           </div>
@@ -50,7 +51,8 @@
                 <ul
                   v-for="category in categories"
                   :key="category.id"
-                  :category="category">
+                  :category="category"
+                >
                   <li>
                     <router-link :to="`/shop${category.get_absolute_url}`">{{
                       category.name
@@ -64,15 +66,19 @@
                   <div
                     class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
                     data-min="10"
-                    data-max="540">
+                    data-max="540"
+                  >
                     <div
-                      class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                      class="ui-slider-range ui-corner-all ui-widget-header"
+                    ></div>
                     <span
                       tabindex="0"
-                      class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                      class="ui-slider-handle ui-corner-all ui-state-default"
+                    ></span>
                     <span
                       tabindex="0"
-                      class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                      class="ui-slider-handle ui-corner-all ui-state-default"
+                    ></span>
                   </div>
                   <div class="range-slider">
                     <div class="price-input">
@@ -86,9 +92,10 @@
                 <div class="latest-product__text">
                   <h4>Latest Products</h4>
                   <LastestProduct
-                    v-for="product in latestProducts.slice(0, 6)"
+                    v-for="product in latestProducts"
                     :key="product.id"
-                    :product="product" />
+                    :product="product"
+                  />
                 </div>
               </div>
             </div>
@@ -120,25 +127,25 @@
                 </div>
               </div>
             </div>
-
             <div class="row">
               <AllProduct
                 v-for="product in allProducts"
                 :key="product.id"
-                :product="product" />
+                :product="product"
+              />
             </div>
-            <div class="d-flex justify-content-center">
-              <template v-if="showPrevButton">
-                <button @click="loadPrev()" class="mx-1">
-                  <i class="fa fa-long-arrow-left mx-1 my-1"></i>
+            <ul class="pagination">
+              <li>
+                <button aria-label="Previous" @click="loadPrev()">
+                  <i class="fa fa-long-arrow-left"></i>
                 </button>
-              </template>
-              <template v-if="showNextButton">
-                <button @click="loadNext()" class="mx-1">
-                  <i class="fa fa-long-arrow-right mx-1 my-1"></i>
+              </li>
+              <li>
+                <button aria-label="Next" @click="loadNext()">
+                  <i class="fa fa-long-arrow-right"></i>
                 </button>
-              </template>
-            </div>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -163,10 +170,6 @@ export default {
       categories: [],
 
       currentPage: 1,
-      showNextButton: false,
-      showPrevButton: false,
-
-      limitList: 6,
     };
   },
   components: {
@@ -177,56 +180,43 @@ export default {
     this.getAllProducts();
     this.getLastProducts();
     this.getloadCategories();
-
-    document.title = "Shop | BK";
+    
+    (document.title = "Shop | BK");
   },
   methods: {
     loadNext() {
       this.currentPage += 1;
       this.getAllProducts();
       this.$router.push(`/shop/?page=${this.currentPage}`);
-      window.scrollTo(0, 420);
     },
     loadPrev() {
       this.currentPage -= 1;
       this.getAllProducts();
       this.$router.push(`/shop/?page=${this.currentPage}`);
-      window.scrollTo(0, 420);
     },
     async getAllProducts() {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get(`/api/v1/products/?page=${this.currentPage}`)
-        .then(response => {
-          this.showPrevButton = false;
-          this.showNextButton = false;
-
-          if (response.data.previous) {
-            this.showPrevButton = true;
-          }
-          if (response.data.next) {
-            this.showNextButton = true;
-          }
-
-          this.allProducts = response.data.results;
+        .get(`/api/v1/products/allproducts/?page=${this.currentPage}`)
+        .then((response) => {
+          this.allProducts = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
 
       this.$store.commit("setIsLoading", false);
     },
-
     async getLastProducts() {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get(`/api/v1/products/latest/`)
-        .then(response => {
+        .get(`/api/v1/products/lastest/`)
+        .then((response) => {
           this.latestProducts = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
 
@@ -236,10 +226,10 @@ export default {
       this.$store.commit("setIsLoading", true);
       await axios
         .get(`/api/v1/categories/`)
-        .then(response => {
+        .then((response) => {
           this.categories = response.data;
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
       this.$store.commit("setIsLoading", false);
