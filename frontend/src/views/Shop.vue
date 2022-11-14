@@ -20,15 +20,15 @@
     <!-- Hero Section End -->
 
     <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="img/breadcrumb.jpg">
+    <section class="breadcrumb-section set-bg" data-setbg="../assets/img/banner/banner-1.jpg">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
             <div class="breadcrumb__text">
-              <h2>Cửa hàng</h2>
+              <h2>Shop</h2>
               <div class="breadcrumb__option">
                 <a href="/">Home</a>
-                <span>Cửa hàng</span>
+                <span>Shop</span>
               </div>
             </div>
           </div>
@@ -103,26 +103,11 @@
           <div class="col-lg-9 col-md-7">
             <div class="filter__item">
               <div class="row">
-                <div class="col-lg-4 col-md-5">
-                  <div class="filter__sort">
-                    <span>Sort By</span>
-                    <select>
-                      <option value="0">Default</option>
-                      <option value="0">Default</option>
-                    </select>
-                  </div>
-                </div>
                 <div class="col-lg-4 col-md-4">
                   <div class="filter__found">
                     <h6>
                       <span>{{ allProducts.length }}</span> Products found
                     </h6>
-                  </div>
-                </div>
-                <div class="col-lg-4 col-md-3">
-                  <div class="filter__option">
-                    <span class="icon_grid-2x2"></span>
-                    <span class="icon_ul"></span>
                   </div>
                 </div>
               </div>

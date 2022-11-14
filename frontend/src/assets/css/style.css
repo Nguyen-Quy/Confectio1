@@ -189,26 +189,33 @@ body {
 .Home {
 	background: url("../img/bg.jpg");
 	background-size: cover;
+	height: 100%;
 }
 
 .MyAccount {
 	background: url("../img/bg.jpg");
 	background-size: cover;
+	height: 100%;
+	padding-bottom: 20%;
 }
 
 .CheckOut {
 	background: url("../img/bg.jpg");
 	background-size: cover;
+	height: 100%;
 }
 
 .Shop {
 	background: url("../img/bg.jpg");
 	background-size: cover;
+	height: 100%;
 }
 
 .Cart {
 	background: url("../img/bg.jpg");
 	background-size: cover;
+	height: 100%;
+	padding-bottom: 30%;
 }
 
 /* Start Login */
@@ -1232,6 +1239,7 @@ h1 {
 -----------------------*/
 
 .breadcrumb-section {
+	background-image: url("../img/banner/banner-1.jpg");
 	display: flex;
 	align-items: center;
 	padding: 45px 0 40px;
@@ -1239,14 +1247,14 @@ h1 {
 
 .breadcrumb__text h2 {
 	font-size: 46px;
-	color: black;
+	color: white;
 	font-weight: 700;
 }
 
 .breadcrumb__option a {
 	display: inline-block;
 	font-size: 16px;
-	color: black;
+	color: white;
 	font-weight: 700;
 	margin-right: 20px;
 	position: relative;
@@ -1258,14 +1266,14 @@ h1 {
 	top: 13px;
 	height: 1px;
 	width: 10px;
-	background: black;
+	background: white;
 	content: "";
 }
 
 .breadcrumb__option span {
 	display: inline-block;
 	font-size: 16px;
-	color: black;
+	color: white;
 }
 
 /*---------------------

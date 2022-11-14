@@ -10,7 +10,7 @@
           <div class="profile-tab-nav border-right">
             <div class="p-4">
               <div class="img-circle text-center mb-3">
-                <img src="./avatar.png" alt="Image" class="shadow-img" />
+                <img src="../assets/img/avatar.png" alt="Image" class="shadow-img" />
               </div>
               <h4 class="text-center"></h4>
             </div>
@@ -22,39 +22,27 @@
             >
               <router-link
                 class="nav-link"
-                id="account-tab"
-                data-toggle="pill"
-                to="/my-account"
-                role="tab"
-                aria-controls="account"
-                aria-selected="true"
-              >
-                <i class="fa fa-home text-center mr-1"></i>
-                Account
-              </router-link>
-              <router-link
-                class="nav-link active"
-                id="password-tab"
-                data-toggle="pill"
-                to="/my-account/password"
-                role="tab"
-                aria-controls="password"
-                aria-selected="false"
-              >
-                <i class="fa fa-key text-center mr-1"></i>
-                Password
-              </router-link>
-              <router-link
-                class="nav-link"
                 id="order-tab"
                 data-toggle="pill"
-                to="/my-account/order"
+                to="/my-account"
                 role="tab"
                 aria-controls="order"
                 aria-selected="false"
               >
                 <i class="fa fa-shopping-bag text-center mr-1"></i>
                 Order
+              </router-link>
+              <router-link
+                class="nav-link active"
+                id="password-tab"
+                data-toggle="pill"
+                to="/my-account/set-password"
+                role="tab"
+                aria-controls="password"
+                aria-selected="false"
+              >
+                <i class="fa fa-key text-center mr-1"></i>
+                Set Password
               </router-link>
             </div>
           </div>

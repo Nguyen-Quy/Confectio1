@@ -41,7 +41,7 @@ export default {
         email: this.email
         
       })
-      // this.$router.push("/reset-password-done");
+      this.$router.push("/reset-password-done");
       console.log(response)
     }
   },

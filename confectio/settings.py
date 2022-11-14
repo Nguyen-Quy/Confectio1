@@ -31,7 +31,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-port_thumbnail = "7777"
+port_thumbnail = '7777'
 
 # Application definition
 

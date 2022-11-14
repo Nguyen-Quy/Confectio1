@@ -11,8 +11,7 @@ import Cart from "../views/Cart.vue";
 import SignUp from "../views/SignUp.vue";
 import LogIn from "../views/LogIn.vue";
 import MyAccount from "../views/MyAccount.vue";
-import Password from '../components/Accounts/Password.vue';
-import Order from '../components/Accounts/Order.vue';
+import SetPassword from '../components/SetPassword.vue';
 import Checkout from "../views/Checkout.vue";
 import Success from "../views/Success.vue";
 import ForgetPassword from '../views/ForgetPassword.vue';
@@ -51,8 +50,7 @@ const routes = [
       requireLogin: true,
     },
   },
-  {path: '/my-account/password', name: 'Password', component: Password},
-  {path: '/my-account/order', name: 'Order', component: Order},
+  {path: '/my-account/set-password', name: 'SetPassword', component: SetPassword},
   {
     path: "/search",
     name: "Search",

@@ -22,7 +22,7 @@
                     <td>{{ item.product.name }}</td>
                     <td>{{ item.product.price }} VNĐ</td>
                     <td>{{ item.quantity }}</td>
-                    <td>${{ getItemTotal(item).toFixed(2) }}</td>
+                    <td>{{ getItemTotal(item).toFixed(3) }} VNĐ</td>
                 </tr>
             </tbody>
         </table>

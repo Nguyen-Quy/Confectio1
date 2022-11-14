@@ -22,33 +22,9 @@
             >
               <router-link
                 class="nav-link active"
-                id="account-tab"
-                data-toggle="pill"
-                to="/my-account"
-                role="tab"
-                aria-controls="account"
-                aria-selected="true"
-              >
-                <i class="fa fa-home text-center mr-1"></i>
-                Account
-              </router-link>
-              <router-link
-                class="nav-link"
-                id="password-tab"
-                data-toggle="pill"
-                to="/my-account/password"
-                role="tab"
-                aria-controls="password"
-                aria-selected="false"
-              >
-                <i class="fa fa-key text-center mr-1"></i>
-                Password
-              </router-link>
-              <router-link
-                class="nav-link"
                 id="order-tab"
                 data-toggle="pill"
-                to="/my-account/order"
+                to="/my-account"
                 role="tab"
                 aria-controls="order"
                 aria-selected="false"
@@ -56,46 +32,34 @@
                 <i class="fa fa-shopping-bag text-center mr-1"></i>
                 Order
               </router-link>
+              <router-link
+                class="nav-link"
+                id="password-tab"
+                data-toggle="pill"
+                to="/my-account/set-password"
+                role="tab"
+                aria-controls="password"
+                aria-selected="false"
+              >
+                <i class="fa fa-key text-center mr-1"></i>
+                Set Password
+              </router-link>
             </div>
           </div>
           <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
-            <form
-              class="tab-pane fade show active"
-              id="account"
+            <div
+              class="tab-pane fade active show"
+              id="password"
               role="tabpanel"
-              aria-labelledby="account-tab"
-              @submit.prevent="submitForm"
+              aria-labelledby="password-tab"
             >
-              <h3 class="mb-4">Account Settings</h3>
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>First Name</label>
-                    <input v-model="first_name" type="text" class="form-control" />
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Last Name</label>
-                    <input v-model="last_name" type="text" class="form-control"/>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label>Email</label>
-                    <input
-                      v-model="email"
-                      type="text"
-                      class="form-control"
-                    />
-                  </div>
-                </div>
-              </div>
-              <p v-for="error in errors" :key="error">{{ error }}</p>
-              <div>
-                <input type="submit" class="btn btn-primary">
-              </div>
-            </form>
+              <h3 class="mb-4">My orders</h3>
+              <OrderSummary
+                v-for="order in orders"
+                :key="order.id"
+                :order="order"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -118,9 +82,6 @@ export default {
   data() {
     return {
       orders: [],
-      first_name: "",
-      last_name: "",
-      email: ""
     };
   },
   mounted() {
@@ -140,7 +101,6 @@ export default {
 
       this.$router.push("/");
     },
-
     async getMyOrders() {
       this.$store.commit("setIsLoading", true);
 
@@ -155,50 +115,6 @@ export default {
 
       this.$store.commit("setIsLoading", false);
     },
-    submitForm() {
-      this.errors = [];
-
-
-      if (this.first_name === "") {
-        this.errors.push("The first name No empty ");
-      }
-
-      if (this.last_name === "") {
-        this.errors.push("The last name No empty");
-      }
-      if (this.email === "") {
-        this.errors.push("The email No empty");
-      }
-
-      if (!this.errors.length) {
-        const formData = {
-          first_name: this.first_name,
-          last_name: this.last_name,
-          email: this.email,
-        };
-
-        axios
-          .post(`/api/v1/users/edit-profile/`, formData)
-          .then((response) => {
-
-          })
-          .catch((error) => {
-            if (error.response) {
-              for (const property in error.response.data) {
-                this.errors.push(
-                  `${property}: ${error.response.data[property]}`
-                );
-              }
-
-              console.log(JSON.stringify(error.response.data));
-            } else if (error.message) {
-              this.errors.push("Something went wrong. Please try again");
-
-              console.log(JSON.stringify(error));
-            }
-          });
-        }
-      }
   },
 };
 </script>
