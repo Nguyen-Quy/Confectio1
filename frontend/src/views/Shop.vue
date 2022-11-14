@@ -195,15 +195,15 @@ export default {
       await axios
         .get(`/api/v1/products/?page=${this.currentPage}`)
         .then(response => {
-          this.showNextButton = false;
-          this.showPrevButton = false;
+          // if (response.data.previous) {
+          //   this.showPrevButton = true;
+          // }
+          // if (response.data.next) {
+          //   this.showNextButton = true;
+          // }
+          this.showPrevButton = response.data.previous;
+          this.showNextButton = response.data.next;
 
-          if (response.data.previous) {
-            this.showPrevButton = true;
-          }
-          if (response.data.next) {
-            this.showNextButton = true;
-          }
           this.allProducts = response.data.results;
         })
         .catch(error => {
