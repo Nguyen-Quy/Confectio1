@@ -93,7 +93,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-9 col-md-7">
+          <div class="col-lg-9 col-md-7" ref="top">
             <div class="filter__item">
               <div class="row">
                 <div class="col-lg-4 col-md-5">
@@ -128,12 +128,22 @@
             </div>
             <div class="d-flex justify-content-center">
               <template v-if="showPrevButton">
-                <button @click="loadPrev()" class="mx-1">
+                <button
+                  @click="
+                    loadPrev();
+                    scrollToElement();
+                  "
+                  class="mx-1">
                   <i class="fa fa-long-arrow-left mx-1 my-1"></i>
                 </button>
               </template>
               <template v-if="showNextButton">
-                <button @click="loadNext()" class="mx-1">
+                <button
+                  @click="
+                    loadNext();
+                    scrollToElement();
+                  "
+                  class="mx-1">
                   <i class="fa fa-long-arrow-right mx-1 my-1"></i>
                 </button>
               </template>
@@ -171,23 +181,27 @@ export default {
     LastestProduct,
   },
   mounted() {
-    this.getAllProducts(),
-      this.getLastProducts(),
-      this.getloadCategories(),
-      (document.title = "Shop | BK");
+    this.getAllProducts();
+    this.getLastProducts();
+    this.getloadCategories();
+    this.scrollToElement();
+    document.title = "Shop | BK";
   },
   methods: {
     loadNext() {
       this.currentPage += 1;
       this.getAllProducts();
       this.$router.push(`/shop/?page=${this.currentPage}`);
-      window.scrollTo(0, 420);
+      // window.scrollTo(0, 420);
     },
     loadPrev() {
       this.currentPage -= 1;
       this.getAllProducts();
       this.$router.push(`/shop/?page=${this.currentPage}`);
-      window.scrollTo(0, 420);
+      // window.scrollTo(0, 420);
+    },
+    scrollToElement() {
+      this.$refs["top"].scrollIntoView({ behavior: "smooth" });
     },
     async getAllProducts() {
       this.$store.commit("setIsLoading", true);
