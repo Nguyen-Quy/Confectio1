@@ -1,29 +1,146 @@
+
 <template>
   <div class="col-lg-4 col-md-6 col-sm-6">
-    <div class="product__item">
-      <router-link :to="product.get_absolute_url" class="latest-product__item">
-        <div class="product__item__pic set-bg">
-          <img :src="product.get_thumbnail">
+    <div class="product">
+      <div class="product-inner">
+        <div class="img-container">
+          <div class="product-image-wrap">
+            <img :src="product.get_thumbnail" class="image">
+            <div class="overlay">
+              <button class="btn btn-outline-secondary btn-sm" @click="addToCart()"><i class="fas fa-cart-plus mr-2" ></i>Add To Cart</button>
+              <router-link :to="product.get_absolute_url" class="product__item">
+                <button class="btn btn-outline-secondary btn-sm">Product Details</button>
+              </router-link>
+            </div>
+          </div>
         </div>
-        <div class="product__item__text">
-          <h6>
-            <router-link :to="product.get_absolute_url">{{
-              product.name
-            }}</router-link>
-          </h6>
-          <h5>Giá: {{ product.price }} VNĐ</h5>
-        </div>
-      </router-link>
+      </div>
+      <div class="product__item__text">
+        <h6>
+          <router-link :to="product.get_absolute_url">{{
+            product.name
+          }}</router-link>
+        </h6>
+        <h5>Giá: {{ product.price }} VNĐ</h5>
+      </div>
+          <!-- <div class="button-group">
+            <button class="button" @click="addToCart()">Add to cart</button>
+              <router-link :to="product.get_absolute_url" class="product__item">
+                <button class="button">Product Details</button>
+              </router-link>
+          </div> -->
+      </div>  
     </div>
-  </div>
-  <router-view/>
+  <router-view/>  
 </template>
 
+import 
+
 <script>
+
 export default {
   name: "AllProduct",
   props: {
     product: Object,
+    color:{
+      type: String
+    },
+    background:{
+      type: String
+    },
+    disabled:{
+      type: Boolean
+    }
   },
+
+  methods: {
+    addToCart() {
+            if (isNaN(this.quantity) || this.quantity < 1) {
+                this.quantity = 1
+            }
+
+            const item = {
+                product: this.product,
+                quantity: this.quantity,
+
+            }  
+
+            this.$store.commit('addToCart', item)
+
+            toast({
+                message: 'The product was added to the cart',
+                type: 'is-success',
+                dismissible: true,
+                pauseOnHover: true,
+                duration: 2000,
+                position: 'bottom-right',
+            })
+        }
+        
+  },
+
 };
 </script>
+
+<style scoped>
+  /* .button {
+    position: center;
+    display: inline-block;
+    margin: 0em 1;
+    padding: 1em 0.5em;
+    background: #fff;
+    border: 3px solid tomato;
+    border-radius: 10px;
+    color: tomato;
+    font-family: "Quicksand", sans-serif;
+    font-size: 0.6em;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    line-height: 1;
+    text-decoration: none;
+    text-transform: uppercase;
+    cursor:pointer;
+    transition: 0.3s;
+  } */
+.img-container{
+  position: relative;
+}
+
+.image{
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.overlay{
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  bottom: 50%;
+  transform: translate(-50%,50%);
+}
+
+.img-container:hover .image{
+  opacity: 0.2;
+}
+
+.img-container:hover .overlay{
+  opacity: 1;
+}
+
+.product{
+  flex: 1 1 33.333%;
+  width: 100%;
+  padding: .5px;
+}
+.product-inner{
+  position: relative;
+  padding: 25px;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+}
+
+.product-image-wrap .image{
+  width: 100%;
+}
+</style>
