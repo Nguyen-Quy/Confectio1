@@ -13,6 +13,7 @@ Pillow="*"
 stripe="*"
 django-jazzmin="*"
 django-autoslug="*"
+django-filter="*"
 
 [dev-packages]
 autopep8 = "*"

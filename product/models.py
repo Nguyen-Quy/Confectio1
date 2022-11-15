@@ -3,11 +3,13 @@ from PIL import Image
 
 from django.core.files import File
 from django.db import models
+from autoslug import AutoSlugField
 
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField()
+    slug = AutoSlugField(populate_from=lambda instance: instance.name,
+                         slugify=lambda value: value.replace(' ', '-'))
 
     class Meta:
         ordering = ('name',)
@@ -23,7 +25,8 @@ class Product(models.Model):
     category = models.ForeignKey(
         Category, related_name='products', on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
-    slug = models.SlugField()
+    slug = AutoSlugField(populate_from=lambda instance: instance.name,
+                         slugify=lambda value: value.replace(' ', '-'))
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=3)
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
