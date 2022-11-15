@@ -13,9 +13,7 @@ from rest_framework.response import Response
 from .models import OrderItem, Order
 from .serializers import OrderSerializer, MyOrderSerializer
 
-from cart.cart import Cart
 from .forms import OrderCreateForm
-from core import models, views
 from product import models, views
 
 # thư viện cho việc sử dụng email
