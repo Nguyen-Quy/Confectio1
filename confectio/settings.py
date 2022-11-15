@@ -46,11 +46,11 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'corsheaders',
     'djoser',
-    'core',
-    'cart',
+
+
     'product',
     'orders',
-    'register',
+
 ]
 
 MIDDLEWARE = [

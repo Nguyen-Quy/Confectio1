@@ -18,7 +18,7 @@ class Order(models.Model):
     phone = models.CharField(max_length=20, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     paid_amount = models.DecimalField(
-        max_digits=10, decipadecimal_places=2, blank=True, null=True)
+        max_digits=10, decimal_places=2, blank=True, null=True)
     stripe_token = models.CharField(max_length=100)
 
     class Meta:
