@@ -1,9 +1,10 @@
 
 <template>
   <div class="col-lg-4 col-md-6 col-sm-6">
-    <div class="product">
-      <div class="product-inner">
+    <div class="product__item">
+      <div class="product__item-inner">
         <div class="img-container">
+        <v-card>
           <div class="product-image-wrap">
             <img :src="product.get_thumbnail" class="image">
             <div class="overlay">
@@ -13,6 +14,7 @@
               </router-link>
             </div>
           </div>
+        </v-card>
         </div>
       </div>
       <div class="product__item__text">
@@ -107,17 +109,21 @@ export default {
 }
 
 .image{
+  position: relative;
   transition: .5s ease;
   backface-visibility: hidden;
+  border-radius: 10%;
+  height:100%;
+  width:100%;
+  aspect-ratio: 4/3;
 }
 
 .overlay{
   transition: .5s ease;
   opacity: 0;
-  position: absolute;
-  top: 10%;
+  position:absolute;
+  top: 30%;
   left: 50%;
-  bottom: 50%;
   transform: translate(-50%,50%);
 }
 
@@ -129,18 +135,20 @@ export default {
   opacity: 1;
 }
 
-.product{
+.product__item{
   flex: 1 1 33.333%;
   width: 100%;
   padding: .5px;
 }
-.product-inner{
-  position: relative;
-  padding: 25px;
+.product__item-inner{
+  position:relative;
+  padding: 10px;
+  border-radius: 10%;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
 }
 
-.product-image-wrap .image{
+.product__item-image-wrap .image{
   width: 100%;
+  border-radius: 10%;
 }
 </style>
