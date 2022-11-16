@@ -3,9 +3,7 @@
     <div class="MyAccount">
       <div class="container">
         <h1 class="mb-5">Account Settings</h1>
-        <div class="column is-12">
-          <button @click="logout()" class="btn btn-primary">Log out</button>
-        </div>
+        <LogOut />
         <div class="bg-white shadow rounded-lg d-block d-sm-flex">
           <div class="profile-tab-nav border-right">
             <div class="p-4">
@@ -47,19 +45,7 @@
             </div>
           </div>
           <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
-            <div
-              class="tab-pane fade active show"
-              id="password"
-              role="tabpanel"
-              aria-labelledby="password-tab"
-            >
-              <h3 class="mb-4">My orders</h3>
-              <OrderSummary
-                v-for="order in orders"
-                :key="order.id"
-                :order="order"
-              />
-            </div>
+            <OrderSummary />
           </div>
         </div>
       </div>
@@ -69,52 +55,17 @@
 </template>
 
 <script>
-import axios from "axios";
-
 import OrderSummary from "@/components/OrderSummary.vue";
-import { RouterView } from "vue-router";
+import LogOut from "@/views/LogOut.vue";
 
 export default {
   name: "MyAccount",
   components: {
     OrderSummary,
-  },
-  data() {
-    return {
-      orders: [],
-    };
+    LogOut,
   },
   mounted() {
     document.title = "My account | BK";
-
-    this.getMyOrders();
-  },
-  methods: {
-    logout() {
-      axios.defaults.headers.common["Authorization"] = "";
-
-      localStorage.removeItem("token");
-      localStorage.removeItem("username");
-      localStorage.removeItem("userid");
-
-      this.$store.commit("removeToken");
-
-      this.$router.push("/");
-    },
-    async getMyOrders() {
-      this.$store.commit("setIsLoading", true);
-
-      await axios
-        .get("/api/v1/orders/")
-        .then((response) => {
-          this.orders = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      this.$store.commit("setIsLoading", false);
-    },
-  },
+  }
 };
 </script>

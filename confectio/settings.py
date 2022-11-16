@@ -33,6 +33,11 @@ ALLOWED_HOSTS = []
 
 port_thumbnail = '7777'
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8081",
+    "http://192.168.0.152:8081"
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -57,9 +62,6 @@ INSTALLED_APPS = [
 
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8081",
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -171,5 +173,8 @@ APPEND_SLASH=False
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
     ),
+    
 }

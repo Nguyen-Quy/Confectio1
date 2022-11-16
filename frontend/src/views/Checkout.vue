@@ -7,7 +7,7 @@
             <h1 class="title">Checkout</h1>
           </div>
 
-          <div class="column is-12 box">
+          <div class="column is-12 box bg-white">
             <table class="table is-fullwidth">
               <thead>
                 <tr>
@@ -37,7 +37,7 @@
             </table>
           </div>
 
-          <div class="box">
+          <div class="box bg-white">
             <h2 class="subtitle">Shipping details</h2>
 
             <p class="has-text-grey mb-4">* All fields are required</p>

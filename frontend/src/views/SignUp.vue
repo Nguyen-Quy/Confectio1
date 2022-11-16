@@ -86,15 +86,15 @@ export default {
       }
 
       if (this.password === "") {
-        this.errors.push("The password is too short");
+        this.errors.push("The password is missing");
       }
 
       if (this.password !== this.confirmReg) {
-        this.errors.push("The passwords doesn't match");
+        this.errors.push("The password doesn't match");
       }
 
-      if (this.email !== this.email) {
-        this.errors.push("The passwords doesn't match");
+      if (this.email === "") {
+        this.errors.push("The email is missing");
       }
 
       if (!this.errors.length) {

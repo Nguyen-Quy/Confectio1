@@ -111,6 +111,17 @@ ol {
 /*---------------------
   Helper CSS
 -----------------------*/
+.page-checkout{
+	padding-bottom: 10%;
+}
+
+.box{
+	border: 1px solid gray;
+}
+
+.btn-logout{
+	margin-bottom: 10px;
+}
 
 .fa-shopping-cart{
 	font-size: 30px;

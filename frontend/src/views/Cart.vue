@@ -7,7 +7,7 @@
             <h1 class="title">Cart</h1>
           </div>
 
-          <div class="column is-12 box">
+          <div class="column is-12 box bg-white">
             <table class="table is-fullwidth" v-if="cartTotalLength">
               <thead>
                 <tr>
@@ -32,7 +32,7 @@
             <p v-else>You don't have any products in your cart...</p>
           </div>
 
-          <div class="column is-12 box">
+          <div class="column is-12 box bg-white">
             <h2 class="subtitle">Summary</h2>
 
             <strong>{{ cartTotalPrice.toFixed(3) }} VNĐ</strong>,
