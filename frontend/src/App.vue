@@ -5,6 +5,23 @@
 @import "./assets/css/nice-select.css";
 @import "./assets/css/slicknav.min.css";
 @import "./assets/css/style.css";
+
+.switch-enter-from{
+  opacity: 0;
+  transform: translateY(100px);
+}
+.switch-enter-active{
+  transition: all 0.3s ease-out;
+}
+.switch-leave-to{
+  opacity: 0;
+  transform: translateY(-100px);
+}
+.switch-leave-active{
+  transition: all 0.3s ease-in;
+}
+
+
 </style>
 
 <template>
@@ -44,9 +61,16 @@
       </div>
     </div>
   </header>
-  <section class="section">
+  <!-- <section class="section">
     <router-view />
-  </section>
+  </section> -->
+  <router-view v-slot="{Component, route}">
+    <Transition name="switch" mode="out-in">
+      <div :key="route.name">
+        <component :is="Component">Switch</component>
+      </div>
+    </Transition>
+  </router-view>
 </template>
 
 <script>
