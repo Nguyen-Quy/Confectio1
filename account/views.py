@@ -12,8 +12,8 @@ from .utils import Util
 class RequestPasswordResetEmail(APIView):
     def post(self, request):
         email = request.data.get('email', '')
-        user = User.objects.get(email=email)
-        if user.exists():
+        if User.objects.filter(email=email).exists():
+            user = User.objects.get(email=email)
             uid = urlsafe_base64_encode(smart_bytes(user.id))
             token = PasswordResetTokenGenerator().make_token(user)
             absurl = CORS_ALLOWED_ORIGINS[0] + '/reset-password/' + uid + '/' + token
