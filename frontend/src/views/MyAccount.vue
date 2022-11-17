@@ -2,7 +2,7 @@
   <section class="py-5 my-5">
     <div class="MyAccount">
       <div class="container">
-        <h1 class="mb-5">Account Settings</h1>
+        <h1 class="text-uppercase font-weight-normal mb-5">Account Settings</h1>
         <LogOut />
         <div class="bg-white shadow rounded-lg d-block d-sm-flex">
           <div class="profile-tab-nav border-right">

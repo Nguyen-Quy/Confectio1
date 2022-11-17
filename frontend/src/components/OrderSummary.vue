@@ -6,7 +6,7 @@
     aria-labelledby="order-tab"
   >
     <h3 class="mb-4">My orders</h3>
-    <div class="box mb-4" v-for="order in orders" :key="order.id">
+    <div class="order-box box mb-4" v-for="order in orders" :key="order.id">
       <h3 class="is-size-4 mb-6">Order #{{ order.id }}</h3>
 
       <h4 class="is-size-5">Products</h4>
@@ -26,7 +26,7 @@
             <td>{{ item.product.name }}</td>
             <td>{{ item.product.price }} VNĐ</td>
             <td>{{ item.quantity }}</td>
-            <td>{{ getItemTotal(item).toFixed(3) }} VNĐ</td>
+            <td>{{ (getItemTotal(item) + getItemTotal(item)*0.1).toFixed(3) }} VNĐ</td>
           </tr>
         </tbody>
       </table>
