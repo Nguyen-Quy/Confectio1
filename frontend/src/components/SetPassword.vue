@@ -10,7 +10,7 @@
               <div class="img-circle text-center mb-3">
                 <img src="../assets/img/avatar.png" alt="Image" class="shadow-img" />
               </div>
-              <h4 class="text-center"></h4>
+              <LoadCustomer />
             </div>
             <div
               class="nav flex-column nav-pills"
@@ -92,11 +92,13 @@
 import axios from "axios";
 
 import LogOut from "@/views/LogOut.vue";
+import LoadCustomer from "@/components/LoadCustomer";
 
 export default {
   name: "SetPassword",
   components: {
     LogOut,
+    LoadCustomer,
   },
   data() {
     return {

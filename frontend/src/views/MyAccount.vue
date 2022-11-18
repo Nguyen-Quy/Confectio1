@@ -10,7 +10,7 @@
               <div class="img-circle text-center mb-3">
                 <img src="../assets/img/avatar.png" alt="Image" class="shadow-img" />
               </div>
-              <h4 class="text-center"></h4>
+              <LoadCustomer />
             </div>
             <div
               class="nav flex-column nav-pills"
@@ -57,15 +57,17 @@
 <script>
 import OrderSummary from "@/components/OrderSummary.vue";
 import LogOut from "@/views/LogOut.vue";
+import LoadCustomer from "@/components/LoadCustomer";
 
 export default {
   name: "MyAccount",
   components: {
     OrderSummary,
     LogOut,
+    LoadCustomer,
   },
   mounted() {
     document.title = "My account | BK";
-  }
+  },
 };
 </script>
