@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
-          <div class="card singup">
+          <div class="card-singup singup">
             <h1>Sign Up</h1>
             <form class="form-group" @submit.prevent="submitForm">
               <input

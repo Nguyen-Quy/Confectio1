@@ -13,7 +13,7 @@ class Order(models.Model):
     place = models.CharField(max_length=100)
     phone = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    paid_amount = models.DecimalField(max_digits=10, decimal_places=3, blank=True, null=True)
+    paid_amount = models.IntegerField(blank=True, null=True)
     stripe_token = models.CharField(max_length=100)
 
     class Meta:
@@ -25,7 +25,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name='items', on_delete=models.CASCADE)
     product = models.ForeignKey(Product, related_name='items', on_delete=models.CASCADE)
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    price = models.IntegerField()
     quantity = models.IntegerField(default=1)
 
     def __str__(self):

@@ -16,13 +16,13 @@
         <h6>{{item.product.name}}</h6>
       </div>
     </div>
-    <div class="pl-md-0 pl-1"><b>{{ item.product.price }} VNĐ</b></div> 
+    <div class="pl-md-0 pl-1"><b>{{ item.product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</b></div> 
     <div class="pl-md-0 pl-2">
       <a class="fa fa-minus-square" @click="decrementQuantity(item)"></a>
       <span class="px-md-3 px-1">{{ item.quantity }}</span>
       <a class="fa fa-plus-square " @click="incrementQuantity(item)"></a>
     </div>
-    <div class="pl-md-0 pl-1"><b>{{ getItemTotal(item).toFixed(3) }} VNĐ</b></div>
+    <div class="pl-md-0 pl-1"><b>{{ getItemTotal(item).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</b></div>
     <div class="close" @click="removeFromCart(item)">&times;</div>
   </div>
 </template>

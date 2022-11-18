@@ -1,6 +1,6 @@
 <template>
-  <section class="py-5 my-5">
-    <div class="MyAccount">
+  <section class="my-5">
+    <div class="SetPassword">
       <div class="container">
         <h1 class="text-uppercase font-weight-normal mb-5">Account Settings</h1>
         <LogOut />

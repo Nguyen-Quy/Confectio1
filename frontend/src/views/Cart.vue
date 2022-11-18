@@ -39,13 +39,13 @@
                     to="/Shop"
                     class="btn btn-sm bg-light border border-dark"
                   >
-                    GO BACK
+                    GO SHOP
                   </router-link>
                 </div>
                 <div class="px-md-0 px-1" id="footer-font">
                   <b class="pl-md-4"
                     >SUBTOTAL<span class="pl-md-4"
-                      >{{ cartTotalPrice.toFixed(3) }} VNĐ</span
+                      >{{ cartTotalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</span
                     ></b
                   >
                 </div>

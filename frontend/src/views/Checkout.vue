@@ -80,20 +80,20 @@
             <!--Card Description-->
             <div>
               <p class="quantity">
-                Qty <span class="float-right text1">{{ cartTotalLength }}</span>
+                Quantity <span class="float-right text1">{{ cartTotalLength }}</span>
               </p>
               <p class="subtotal">
                 Subtotal<span class="float-right text1"
-                  >{{ cartTotalPrice.toFixed(3) }} VNĐ</span
+                  >{{ cartTotalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</span
                 >
               </p>
               <p class="shipping">
-                Shipping<span class="float-right text1">{{ (cartTotalPrice*0.1).toFixed(3) }} VNĐ</span>
+                Shipping<span class="float-right text1">{{ (cartTotalPrice*0.1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</span>
               </p>
               <p class="total">
                 <strong>Total</strong
                 ><span class="float-right totalText1"
-                  ><span class="totalText2">{{ (cartTotalPrice + (cartTotalPrice*0.1)).toFixed(3) }} VNĐ</span></span
+                  ><span class="totalText2">{{ (cartTotalPrice + (cartTotalPrice*0.1)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</span></span
                 >
               </p>
             </div>

@@ -8,7 +8,7 @@
         <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
           <div
             v-if="!registerActive"
-            class="card login"
+            class="card-login login"
             :class="{ error: emptyFields }"
           >
             <h1>Sign In</h1>

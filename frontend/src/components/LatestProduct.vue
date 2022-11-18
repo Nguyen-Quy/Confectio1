@@ -18,7 +18,7 @@
             </div>
             <div class="latest-product__item__text">
               <h6>{{ product.name }}</h6>
-              <span>{{ product.price }} VNĐ</span>
+              <span>{{ product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</span>
             </div>
           </router-link>
         </div>

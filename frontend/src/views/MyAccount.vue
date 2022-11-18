@@ -1,5 +1,5 @@
 <template>
-  <section class="py-5 my-5">
+  <section class="my-5">
     <div class="MyAccount">
       <div class="container">
         <h1 class="text-uppercase font-weight-normal mb-5">Account Settings</h1>
