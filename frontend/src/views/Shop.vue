@@ -60,32 +60,25 @@
                   </li>
                 </ul>
               </div>
-              <div class="sidebar__item">
                 <h4>Price</h4>
-                <div class="price-range-wrap">
-                  <div
-                    class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                    data-min="10"
-                    data-max="540"
-                  >
-                    <div
-                      class="ui-slider-range ui-corner-all ui-widget-header"
-                    ></div>
-                    <span
-                      tabindex="0"
-                      class="ui-slider-handle ui-corner-all ui-state-default"
-                    ></span>
-                    <span
-                      tabindex="0"
-                      class="ui-slider-handle ui-corner-all ui-state-default"
-                    ></span>
+              <div class="wrapper">
+                <div class="price-input">
+                  <div class="field">
+                    <span>Min</span>
+                    <input type="number" class="input-min" value="10000">
                   </div>
-                  <div class="range-slider">
-                    <div class="price-input">
-                      <input type="text" id="minamount" />
-                      <input type="text" id="maxamount" />
-                    </div>
+                  <div class="separator">-</div>
+                  <div class="field">
+                    <span>Max</span>
+                    <input type="number" class="input-max" value="1500000">
                   </div>
+                </div>
+                <div class="slider">
+                  <div class="progress"></div>
+                </div>
+                <div class="range-input">
+                  <input type="range" class="range-min" min="0" max="1500000" value="10000" step="5000">
+                  <input type="range" class="range-max" min="0" max="1500000" value="1500000" step="5000">
                 </div>
               </div>
               <div class="sidebar__item">
@@ -145,9 +138,10 @@
 
 <script>
 import axios from "axios";
-
 import AllProduct from "@/components/AllProduct";
 import LastestProduct from "@/components/LastestProduct";
+
+
 
 export default {
   name: "ShopPage",
@@ -166,6 +160,7 @@ export default {
     this.getAllProducts(),
       this.getLastProducts(),
       this.getloadCategories(),
+      this.getSlider(),
       (document.title = "Shop | BK");
   },
   methods: {
@@ -209,8 +204,53 @@ export default {
         });
       this.$store.commit("setIsLoading", false);
     },
-  },
+    async getSlider(){
+      const rangeInput = document.querySelectorAll(".range-input input"),
+      priceInput = document.querySelectorAll(".price-input input"),
+      progress = document.querySelector(".slider .progress");
+
+      let priceGap = 1000;
+
+      priceInput.forEach(input =>{
+        input.addEventListener("input", e => {
+          let minVal = parseInt(priceInput[0].value),
+          maxVal = parseInt(priceInput[1].value);
+          if((maxVal - minVal >= priceGap) && maxVal <=10000){
+          
+            if(e.target.className === "input-min"){
+              rangeInput[0].value = minVal;
+              progress.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+            }else{
+              rangeInput[1].value = maxVal;
+              progress.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
+            }
+          }
+        });
+      });
+
+      rangeInput.forEach(input =>{
+        input.addEventListener("input", e => {
+          let minVal = parseInt(rangeInput[0].value),
+          maxVal = parseInt(rangeInput[1].value);
+
+          if(maxVal - minVal < priceGap){
+            if(e.target.className === "range-min"){
+              rangeInput[0].value = maxVal - priceGap;
+            }else{
+              rangeInput[1].value = minVal + priceGap;
+            }
+          }else{
+            priceInput[0].value = minVal;
+            priceInput[1].value = maxVal;
+            progress.style.left = (minVal / rangeInput[0].max) * 100 + "%";
+            progress.style.right =100 - (maxVal / rangeInput[1].max) * 100 + "%";
+          }
+        });
+      });
+    }
+  }, 
 };
+
 </script>
 <style>
 .pagination-container {
@@ -236,5 +276,99 @@ export default {
 }
 .active-page:hover {
   background-color: #2988c8;
+}
+
+.wrapper{
+  width: 250px;
+  background: rgba(255, 255, 255);
+  border-radius: 10px;
+  padding: 5px 5px 10px;
+}
+
+.price-input{
+  width: 100%;
+  display: flex;
+  margin: 30px 0 35px;
+}
+
+.price-input .field{
+  height: 50px;
+  width: 300px;
+  display:flex;
+  align-items: center;
+}
+
+.field input{
+  width: 65%;
+  height: 40%;
+  outline: none;
+  font-size: 13px;
+  text-align: center;
+  margin-left: 10px;
+  border-radius: 5px;
+  border: 1px solid rgb(0, 0, 0);
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+}
+.price-input .separator{
+  width: 130px;
+  display: flex;
+  font-size: 19px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.slider{
+  height: 5px;
+  border-radius: 5px;
+  background: #ddd;
+  position: relative;
+}
+
+.slider .progress{
+  height: 5px;
+  left: 10px;
+  right: 10px;
+  position:absolute;
+  border-radius: 5px;
+  background: #17A2B8;
+}
+
+.range-input{
+  position: relative;
+}
+
+.range-input input{
+  position: absolute;
+  top: -5px;
+  height: 5px;
+  width: 100%;
+  pointer-events:none;
+  background: none;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb{
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  pointer-events:auto;
+  -webkit-appearance: none;
+  background: #17A2B8;
+}
+
+input[type="range"]::-moz-range-thumb{
+  height: 17px;
+  width: 17px;
+  border: none;
+  border-radius: 50%;
+  pointer-events:auto;
+  -moz-appearance: none;
+  background: #17A2B8;
 }
 </style>
