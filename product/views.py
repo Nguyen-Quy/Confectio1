@@ -10,7 +10,9 @@ from rest_framework.decorators import api_view
 
 from .models import Product, Category
 from .serializers import ProductSerializer, CategorySerializer
+from django.core.paginator import EmptyPage, Paginator
 
+PRODUCTS_PER_PAGE = 9
 
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
@@ -21,9 +23,25 @@ class ProductViewSet(ModelViewSet):
 
     @action(detail=False, methods=['get'], url_path='latest',)
     def latest_product(self, request, format=None):
-        latest = self.get_queryset().order_by('-date_added')
+        latest = self.get_queryset().order_by('-date_added')[0:6]
         # serializer = self.get_serializer_class()(latest)
         serializer = ProductSerializer(latest, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'], url_path='allproducts',)
+    def all_product(self, request, format=None):
+        page = request.GET.get('page',1)
+        allproducts = self.get_queryset()
+        product_paginator = Paginator(allproducts, PRODUCTS_PER_PAGE)
+        try:
+            allproducts = product_paginator.page(page)
+            serializer = ProductSerializer(allproducts, many=True)
+        except EmptyPage:
+            allproducts = product_paginator.page(product_paginator.num_pages)
+            serializer = ProductSerializer(allproducts, many=True)
+        except:
+            allproducts = product_paginator.page(PRODUCTS_PER_PAGE)
+            serializer = ProductSerializer(allproducts, many=True)
         return Response(serializer.data)
 
 
