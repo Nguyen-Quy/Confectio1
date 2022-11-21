@@ -9,7 +9,7 @@ import ProductByCategory from "../views/ProductByCategory.vue";
 import LoadProductSearch from "../components/LoadProductSearch.vue";
 import Cart from "../views/Cart.vue";
 import SignUp from "../views/SignUp.vue";
-import LogIn from "../views/LogIn.vue";
+import LogIn from "../views/Login.vue";
 import MyAccount from "../views/MyAccount.vue";
 import SetPassword from '../components/SetPassword.vue';
 import Checkout from "../views/Checkout.vue";
