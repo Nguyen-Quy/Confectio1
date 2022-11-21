@@ -11,7 +11,7 @@
               product.name
             }}</router-link>
           </h6>
-          <h5>Giá: {{ product.price }} VNĐ</h5>
+          <h5>Giá: {{ product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</h5>
         </div>
       </router-link>
     </div>

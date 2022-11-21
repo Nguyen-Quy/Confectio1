@@ -11,7 +11,7 @@
         <div class="col-lg-7">
           <h1 class="title">{{ product.name }}</h1>
           <p>{{ product.description }}</p>
-          <p><strong>Giá: </strong>{{ product.price }} VNĐ</p>
+          <p><strong>Giá: </strong>{{ String(product.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</p>
           <div class="field has-addons mt-6">
             <div class="control">
               <input type="number" class="input" min="1" v-model="quantity" />
@@ -35,6 +35,9 @@ import { toast } from "bulma-toast";
 
 export default {
   name: "Product",
+  props: {
+    product: Object,
+  },
   data() {
     return {
       product: {},
@@ -56,7 +59,7 @@ export default {
         .then((response) => {
           this.product = response.data;
 
-          document.title = this.product.name + " | BK";
+          document.title = this.product.name + "Product detail | BK";
         })
         .catch((error) => {
           console.log(error);
@@ -87,4 +90,5 @@ export default {
     },
   },
 };
+
 </script>

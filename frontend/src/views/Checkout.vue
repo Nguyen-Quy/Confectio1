@@ -1,120 +1,112 @@
 <template>
   <div class="CheckOut">
-    <div class="container">
-      <section class="page-checkout">
-        <div class="columns is-multiline">
-          <div class="column is-12">
-            <h1 class="title">Checkout</h1>
-          </div>
+    <div class="container column is-12">
+      <h1 class="text-uppercase font-weight-normal">Checkout</h1>
+    </div>
+    <div class="row mainRow">
+      <!--Card 1-->
+      <div class="col-sm-8">
+        <div class="card card-cascade wider shadow p-3 mb-5">
+          <h2 class="subtitle">Shipping details</h2>
 
-          <div class="column is-12 box bg-white">
-            <table class="table is-fullwidth">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr v-for="item in cart.items" :key="item.product.id">
-                  <td>{{ item.product.name }}</td>
-                  <td>{{ item.product.price }} VNĐ</td>
-                  <td>{{ item.quantity }}</td>
-                  <td>{{ getItemTotal(item).toFixed(3) }} VNĐ</td>
-                </tr>
-              </tbody>
-
-              <tfoot>
-                <tr>
-                  <td colspan="2">Total</td>
-                  <td>{{ cartTotalLength }}</td>
-                  <td>{{ cartTotalPrice.toFixed(3) }} VNĐ</td>
-                </tr>
-              </tfoot>
-            </table>
-          </div>
-
-          <div class="box bg-white">
-            <h2 class="subtitle">Shipping details</h2>
-
-            <p class="has-text-grey mb-4">* All fields are required</p>
-
-            <div class="row from_checkout form-group">
-              <div class="column1 is-6">
-                <div class="field">
-                  <label>First name*</label>
-                  <div class="control">
-                    <input type="text" class="input" v-model="first_name" />
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label>Last name*</label>
-                  <div class="control">
-                    <input type="text" class="input" v-model="last_name" />
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label>E-mail*</label>
-                  <div class="control">
-                    <input type="email" class="input" v-model="email" />
-                  </div>
-                </div>
-
-                <div class="field">
-                  <label>Phone*</label>
-                  <div class="control">
-                    <input type="text" class="input" v-model="phone" />
-                  </div>
+          <p class="has-text-grey mb-4">* All fields are required</p>
+          <div class="row from_checkout form-group">
+            <div class="column1 is-6">
+              <div class="field">
+                <label>First name*</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="first_name" />
                 </div>
               </div>
 
-              <div class="column2 is-6">
-                <div class="field">
-                  <label>Address*</label>
-                  <div class="control">
-                    <input type="text" class="input" v-model="address" />
-                  </div>
+              <div class="field">
+                <label>Last name*</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="last_name" />
                 </div>
+              </div>
 
-                <div class="field">
-                  <label>Zip code*</label>
-                  <div class="control">
-                    <input type="text" class="input" v-model="zipcode" />
-                  </div>
+              <div class="field">
+                <label>E-mail*</label>
+                <div class="control">
+                  <input type="email" class="input" v-model="email" />
                 </div>
+              </div>
 
-                <div class="field">
-                  <label>Place*</label>
-                  <div class="control">
-                    <input type="text" class="input" v-model="place" />
-                  </div>
+              <div class="field">
+                <label>Phone*</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="phone" />
                 </div>
               </div>
             </div>
 
-            <div class="notification is-danger mt-4" v-if="errors.length">
-              <p style="color: red;" v-for="error in errors" :key="error">{{ error }}</p>
+            <div class="column2 is-6">
+              <div class="field">
+                <label>Address*</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="address" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Zip code*</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="zipcode" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Place*</label>
+                <div class="control">
+                  <input type="text" class="input" v-model="place" />
+                </div>
+              </div>
             </div>
-
-            <hr />
-
-            <div id="card-element" class="mb-5"></div>
-
-            <template v-if="cartTotalLength">
-              <hr />
-
-              <button class="button_pay is-dark" @click="submitForm">
-                Pay with Stripe
-              </button>
-            </template>
+          </div>
+          <div class="notification is-danger mt-4" v-if="errors.length">
+            <p style="color: red" v-for="error in errors" :key="error">
+              {{ error }}
+            </p>
           </div>
         </div>
-      </section>
+      </div>
+
+      <!--Card 2-->
+      <div class="col-sm-4">
+        <div class="card card-cascade card-ecommerce wider shadow p-3 mb-5">
+          <!--Card Body-->
+          <div class="card-body card-body-cascade">
+            <!--Card Description-->
+            <div>
+              <p class="quantity">
+                Quantity <span class="float-right text1">{{ cartTotalLength }}</span>
+              </p>
+              <p class="subtotal">
+                Subtotal<span class="float-right text1"
+                  >{{ cartTotalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</span
+                >
+              </p>
+              <p class="shipping">
+                Shipping<span class="float-right text1">{{ (cartTotalPrice*0.1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</span>
+              </p>
+              <p class="total">
+                <strong>Total</strong
+                ><span class="float-right totalText1"
+                  ><span class="totalText2">{{ (cartTotalPrice + (cartTotalPrice*0.1)).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</span></span
+                >
+              </p>
+            </div>
+
+            <div class="payment mb-5" id="card-element"></div>
+
+            <!--Card footer-->
+            <div class="purchaseLink" v-if="cartTotalLength">
+              <button class="card-footer text-center" @click="submitForm">PURCHASE</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>

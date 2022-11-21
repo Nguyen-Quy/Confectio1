@@ -1,16 +1,15 @@
 <template>
-  <section class="py-5 my-5">
-    <div class="MyAccount">
+  <section class="my-5">
+    <div class="SetPassword">
       <div class="container">
-        <h1 class="mb-5">Account Settings</h1>
-        <LogOut />
+        <h1 class="text-uppercase font-weight-normal mb-5">Account Settings</h1>
         <div class="bg-white shadow rounded-lg d-block d-sm-flex">
           <div class="profile-tab-nav border-right">
             <div class="p-4">
               <div class="img-circle text-center mb-3">
                 <img src="../assets/img/avatar.png" alt="Image" class="shadow-img" />
               </div>
-              <h4 class="text-center"></h4>
+              <LoadCustomer />
             </div>
             <div
               class="nav flex-column nav-pills"
@@ -43,6 +42,7 @@
                 Set Password
               </router-link>
             </div>
+            <LogOut />
           </div>
           <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
             <form
@@ -92,11 +92,13 @@
 import axios from "axios";
 
 import LogOut from "@/views/LogOut.vue";
+import LoadCustomer from "@/components/LoadCustomer";
 
 export default {
   name: "SetPassword",
   components: {
     LogOut,
+    LoadCustomer,
   },
   data() {
     return {

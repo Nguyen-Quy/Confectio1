@@ -6,7 +6,7 @@
     aria-labelledby="order-tab"
   >
     <h3 class="mb-4">My orders</h3>
-    <div class="box mb-4" v-for="order in orders" :key="order.id">
+    <div class="order-box box mb-4" v-for="order in orders" :key="order.id">
       <h3 class="is-size-4 mb-6">Order #{{ order.id }}</h3>
 
       <h4 class="is-size-5">Products</h4>
@@ -24,11 +24,17 @@
         <tbody>
           <tr v-for="item in order.items" :key="item.product.id">
             <td>{{ item.product.name }}</td>
-            <td>{{ item.product.price }} VNĐ</td>
+            <td>{{ item.product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</td>
             <td>{{ item.quantity }}</td>
-            <td>{{ getItemTotal(item).toFixed(3) }} VNĐ</td>
+            <td>{{ (getItemTotal(item) + getItemTotal(item)*0.1).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</td>
           </tr>
         </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="3">Subtotal</th>
+            <td>{{ order.paid_amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</td>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>
@@ -41,7 +47,7 @@ export default {
   name: "OrderSummary",
   data() {
     return {
-      orders: [],
+      orders: []
     };
   },
   mounted() {
@@ -52,7 +58,7 @@ export default {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get("/api/v1/orders/")
+        .get(`/api/v1/orders/`)
         .then((response) => {
           this.orders = response.data;
         })
@@ -67,8 +73,8 @@ export default {
     },
     orderTotalLength(order) {
       return order.items.reduce((acc, curVal) => {
-        return (acc += curVal.quantity);
-      }, 0);
+          return acc += curVal.quantity
+      }, 0)
     },
   },
 };

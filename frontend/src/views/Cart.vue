@@ -2,47 +2,63 @@
   <div class="Cart">
     <div class="container">
       <section class="page-cart">
-        <div class="columns is-multiline">
-          <div class="column is-12">
-            <h1 class="title">Cart</h1>
-          </div>
-
-          <div class="column is-12 box bg-white">
-            <table class="table is-fullwidth" v-if="cartTotalLength">
-              <thead>
-                <tr>
-                  <th>Product</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
-                  <th>Total</th>
-                  <th></th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <CartItem
-                  v-for="item in cart.items"
-                  :key="item.product.id"
-                  :initialItem="item"
-                  @removeFromCart="removeFromCart"
-                />
-              </tbody>
-            </table>
+        <div>
+          <h1 class="text-uppercase font-weight-normal">shopping bag</h1>
+        </div>
+        <div class="bg-white rounded-top mt-5" id="zero-pad">
+          <div class="row d-flex justify-content-center">
+            <div class="cart-item col-lg-10 col-12 pt-3" v-if="cartTotalLength">
+              <div class="d-flex flex-column pt-4">
+                <div class="font-weight-normal">
+                  {{ cartTotalLength }} items
+                </div>
+              </div>
+              <div class="d-flex flex-row px-lg-5 mx-lg-5 mobile" id="heading">
+                <div class="px-lg-5 mr-lg-5" id="produc">PRODUCTS</div>
+                <div class="px-lg-5 ml-lg-5" id="prc">PRICE</div>
+                <div class="px-lg-5 ml-lg-1" id="quantity">QUANTITY</div>
+                <div class="px-lg-5 ml-lg-3" id="total">TOTAL</div>
+              </div>
+              <CartItem
+                v-for="item in cart.items"
+                :key="item.product.id"
+                :initialItem="item"
+                @removeFromCart="removeFromCart"
+              />
+            </div>
 
             <p v-else>You don't have any products in your cart...</p>
           </div>
-
-          <div class="column is-12 box bg-white">
-            <h2 class="subtitle">Summary</h2>
-
-            <strong>{{ cartTotalPrice.toFixed(3) }} VNĐ</strong>,
-            {{ cartTotalLength }} items
-
-            <hr />
-
-            <router-link to="/cart/checkout" class="button is-dark"
-              >Proceed to checkout</router-link
-            >
+        </div>
+        <div class="container bg-light rounded-bottom py-4" id="zero-pad">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-10 col-12">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <router-link
+                    to="/Shop"
+                    class="btn btn-sm bg-light border border-dark"
+                  >
+                    GO SHOP
+                  </router-link>
+                </div>
+                <div class="px-md-0 px-1" id="footer-font">
+                  <b class="pl-md-4"
+                    >SUBTOTAL<span class="pl-md-4"
+                      >{{ cartTotalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</span
+                    ></b
+                  >
+                </div>
+                <div>
+                  <router-link
+                    to="/cart/checkout"
+                    class="btn btn-sm bg-dark text-white px-lg-5 px-3"
+                  >
+                    CONTINUE
+                  </router-link>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -51,7 +67,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import CartItem from "@/components/CartItem.vue";
 
 export default {

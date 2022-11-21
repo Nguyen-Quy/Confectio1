@@ -2,7 +2,7 @@
   <div class="sidebar__item">
     <h4>Categories</h4>
     <ul>
-      <li><router-link :to="`/shop`">All</router-link></li>
+      <li><router-link to="/shop">All</router-link></li>
     </ul>
     <ul v-for="category in categories" :key="category.id" :category="category">
       <li>
