@@ -10,7 +10,6 @@ from confectio.settings import CORS_ALLOWED_ORIGINS
 from .utils import Util
 
 class RequestPasswordResetEmail(APIView):
-
     def post(self, request):
         email = request.data.get('email', '')
         if User.objects.filter(email=email).exists():
@@ -24,4 +23,3 @@ class RequestPasswordResetEmail(APIView):
                     'email_subject': 'Reset your passsword'}
             Util.send_email(data)
         return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
-
