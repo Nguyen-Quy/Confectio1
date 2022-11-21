@@ -21,11 +21,11 @@ class ProductViewSet(ModelViewSet):
     http_method_names = ['get', ]
     lookup_field = 'slug'
 
-    @action(detail=False, methods=['get'], url_path='lastest',)
-    def lastest_product(self, request, format=None):
-        lastest = self.get_queryset().order_by('-date_added')[0:6]
+    @action(detail=False, methods=['get'], url_path='latest',)
+    def latest_product(self, request, format=None):
+        latest = self.get_queryset().order_by('-date_added')[0:6]
         # serializer = self.get_serializer_class()(latest)
-        serializer = ProductSerializer(lastest, many=True)
+        serializer = ProductSerializer(latest, many=True)
         return Response(serializer.data)
 
     @action(detail=False, methods=['get'], url_path='allproducts',)

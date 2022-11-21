@@ -41,7 +41,3 @@ class CategorySerializer(serializers.ModelSerializer):
             'url': {'lookup_field': 'slug'}
         }
 
-    # def get_products_set(self, obj):
-    #     products_query = Product.objects.filter(slug=obj.slug)
-    #     serializer = ProductSerializer(products_query, many=True)
-    #     return serializer.data

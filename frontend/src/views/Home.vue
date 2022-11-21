@@ -1,17 +1,6 @@
 <template>
   <div class="Home">
-    <section class="hero">
-      <div class="container">
-        <div class="hero__search">
-          <div class="hero__search__form">
-            <form method="get" action="/search">
-              <input type="text" placeholder="What do you need?" name="query" />
-              <button type="submit" class="site-btn">SEARCH</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Search />
 
     <vueper-slides
       autoplay
@@ -22,7 +11,7 @@
     >
       <vueper-slide
         class="slider"
-        v-for="product in lastestProducts"
+        v-for="product in latestProducts"
         :key="product.id"
         :image="product.get_image"
         :content="product.name"
@@ -35,13 +24,13 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="section-title">
-              <h2>Lastest Product</h2>
+              <h2>Latest Product</h2>
             </div>
           </div>
         </div>
         <div class="row featured__filter" id="MixItUp556786">
           <FeaturedProduct
-            v-for="product in lastestProducts"
+            v-for="product in latestProducts"
             :key="product.id"
             :product="product"
           />
@@ -56,7 +45,10 @@
 
 <script>
 import axios from "axios";
+
+import Search from "@/views/Search";
 import FeaturedProduct from "@/components/FeaturedProduct";
+
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 
@@ -64,46 +56,33 @@ export default {
   name: "Home",
   data() {
     return {
-      lastestProducts: [],
-      categories: [],
+      latestProducts: [],
     };
   },
   components: {
     FeaturedProduct,
     VueperSlides,
     VueperSlide,
+    Search
   },
   mounted() {
-    this.getLastestProducts();
-    this.getloadCategories();
+    this.getLatestProducts();
 
     document.title = "Home | BK";
   },
   methods: {
-    async getLastestProducts() {
+    async getLatestProducts() {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get(`/api/v1/products/lastest/`)
+        .get(`/api/v1/products/latest/`)
         .then((response) => {
-          this.lastestProducts = response.data;
+          this.latestProducts = response.data;
         })
         .catch((error) => {
           console.log(error);
         });
 
-      this.$store.commit("setIsLoading", false);
-    },
-    async getloadCategories() {
-      this.$store.commit("setIsLoading", true);
-      await axios
-        .get(`/api/v1/categories/`)
-        .then((response) => {
-          this.categories = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
       this.$store.commit("setIsLoading", false);
     },
   },
