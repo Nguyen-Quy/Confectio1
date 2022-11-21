@@ -1,17 +1,6 @@
 <template>
   <div class="Home">
-    <section class="hero">
-      <div class="container">
-        <div class="hero__search">
-          <div class="hero__search__form">
-            <form method="get" action="/search">
-              <input type="text" placeholder="What do you need?" name="query" />
-              <button type="submit" class="site-btn">SEARCH</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Search />
 
     <vueper-slides
       autoplay
@@ -56,7 +45,10 @@
 
 <script>
 import axios from "axios";
+
+import Search from "@/views/Search";
 import FeaturedProduct from "@/components/FeaturedProduct";
+
 import { VueperSlides, VueperSlide } from "vueperslides";
 import "vueperslides/dist/vueperslides.css";
 
@@ -65,17 +57,16 @@ export default {
   data() {
     return {
       latestProducts: [],
-      categories: [],
     };
   },
   components: {
     FeaturedProduct,
     VueperSlides,
     VueperSlide,
+    Search
   },
   mounted() {
     this.getLatestProducts();
-    this.getloadCategories();
 
     document.title = "Home | BK";
   },
@@ -92,18 +83,6 @@ export default {
           console.log(error);
         });
 
-      this.$store.commit("setIsLoading", false);
-    },
-    async getloadCategories() {
-      this.$store.commit("setIsLoading", true);
-      await axios
-        .get(`/api/v1/categories/`)
-        .then((response) => {
-          this.categories = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
       this.$store.commit("setIsLoading", false);
     },
   },

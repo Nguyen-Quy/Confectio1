@@ -59,7 +59,6 @@
 
 <script>
 import axios from "axios";
-import { toast } from "bulma-toast";
 
 export default {
   name: "SignUp",
@@ -81,7 +80,7 @@ export default {
 
 
       if (this.new_password === "") {
-        this.errors.push("The new password is too short");
+        this.errors.push("The new password is missing!");
       }
 
       if (this.new_password !== this.re_new_password) {

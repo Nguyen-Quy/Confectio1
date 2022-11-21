@@ -1,18 +1,15 @@
 <template>
-  <section class="py-5 my-5">
-    <div class="MyAccount">
+  <section class="my-5">
+    <div class="SetPassword">
       <div class="container">
-        <h1 class="mb-5">Account Settings</h1>
-        <div class="column is-12">
-          <button @click="logout()" class="btn btn-primary">Log out</button>
-        </div>
+        <h1 class="text-uppercase font-weight-normal mb-5">Account Settings</h1>
         <div class="bg-white shadow rounded-lg d-block d-sm-flex">
           <div class="profile-tab-nav border-right">
             <div class="p-4">
               <div class="img-circle text-center mb-3">
                 <img src="../assets/img/avatar.png" alt="Image" class="shadow-img" />
               </div>
-              <h4 class="text-center"></h4>
+              <LoadCustomer />
             </div>
             <div
               class="nav flex-column nav-pills"
@@ -45,6 +42,7 @@
                 Set Password
               </router-link>
             </div>
+            <LogOut />
           </div>
           <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
             <form
@@ -93,16 +91,17 @@
 <script>
 import axios from "axios";
 
-import OrderSummary from "@/components/OrderSummary.vue";
+import LogOut from "@/views/LogOut.vue";
+import LoadCustomer from "@/components/LoadCustomer";
 
 export default {
-  name: "MyAccount",
+  name: "SetPassword",
   components: {
-    OrderSummary,
+    LogOut,
+    LoadCustomer,
   },
   data() {
     return {
-      orders: [],
       current_password: "",
       new_password: "",
       re_new_password: "",
@@ -111,49 +110,21 @@ export default {
   },
   mounted() {
     document.title = "My account | BK";
-
-    this.getMyOrders();
-    
   },
   methods: {
-    logout() {
-      axios.defaults.headers.common["Authorization"] = "";
-
-      localStorage.removeItem("token");
-      localStorage.removeItem("username");
-      localStorage.removeItem("userid");
-
-      this.$store.commit("removeToken");
-
-      this.$router.push("/");
-    },
-    async getMyOrders() {
-      this.$store.commit("setIsLoading", true);
-
-      await axios
-        .get("/api/v1/orders/")
-        .then((response) => {
-          this.orders = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      this.$store.commit("setIsLoading", false);
-    },
     submitForm() {
       this.errors = [];
 
 
       if (this.current_password === "") {
-        this.errors.push("The current password not true");
+        this.errors.push("The current password is missing");
       }
       if (this.new_password === "") {
-        this.errors.push("The new password is too short");
+        this.errors.push("The new password is missing");
       }
 
       if (this.new_password !== this.re_new_password) {
-        this.errors.push("The current password doesn't match");
+        this.errors.push("The password doesn't match");
       }
 
       if (!this.errors.length) {

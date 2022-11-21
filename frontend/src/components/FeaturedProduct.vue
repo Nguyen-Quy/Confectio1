@@ -11,7 +11,7 @@
           <h6>
             <a href="#">{{ product.name }}</a>
           </h6>
-          <h5>Giá: {{ product.price }} VNĐ</h5>
+          <h5>Giá: {{ product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</h5>
         </div>
       </router-link>
     </div>

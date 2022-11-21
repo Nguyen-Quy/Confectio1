@@ -1,75 +1,15 @@
 <template>
   <div class="Shop">
-    <!-- Hero Section Begin -->
-    <section class="hero hero-normal">
-      <div class="container">
-        <div class="hero__search">
-          <div class="hero__search__form">
-            <form method="get" action="/search">
-              <input
-                type="text"
-                placeholder="What do yo u need?"
-                name="query"
-              />
-              <button type="submit" class="site-btn">SEARCH</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Hero Section End -->
-
-    <!-- Breadcrumb Section Begin -->
-    <section class="breadcrumb-section set-bg" data-setbg="../assets/img/banner/banner-1.jpg">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12 text-center">
-            <div class="breadcrumb__text">
-              <h2>Shop</h2>
-              <div class="breadcrumb__option">
-                <a href="/">Home</a>
-                <span>Shop</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Breadcrumb Section End -->
-
+    <Search />
+    <Breadcrumb />
     <!-- Product Section Begin -->
     <section class="product spad">
       <div class="container">
         <div class="row">
           <div class="col-lg-3 col-md-5">
             <div class="sidebar">
-              <div class="sidebar__item">
-                <h4>Categories</h4>
-                <ul>
-                  <li><router-link :to="`/shop`">All</router-link></li>
-                </ul>
-                <ul
-                  v-for="category in categories"
-                  :key="category.id"
-                  :category="category"
-                >
-                  <li>
-                    <router-link :to="`/shop${category.get_absolute_url}`">{{
-                      category.name
-                    }}</router-link>
-                  </li>
-                </ul>
-              </div>
-              <div class="sidebar__item">
-                <div class="latest-product__text">
-                  <h4>Latest Products</h4>
-                  <LatestProduct
-                    v-for="product in latestProducts"
-                    :key="product.id"
-                    :product="product"
-                  />
-                </div>
-              </div>
+              <Category />
+              <LatestProduct />
             </div>
           </div>
           <div class="col-lg-9 col-md-7">
@@ -115,6 +55,9 @@
 <script>
 import axios from "axios";
 
+import Category from "@/components/Category";
+import Breadcrumb from "@/components/Breadcrumb";
+import Search from "@/views/Search";
 import AllProduct from "@/components/AllProduct";
 import LatestProduct from "@/components/LatestProduct";
 
@@ -123,21 +66,18 @@ export default {
   data() {
     return {
       allProducts: [],
-      latestProducts: [],
-      categories: [],
-
       currentPage: 1,
     };
   },
   components: {
     AllProduct,
     LatestProduct,
+    Search,
+    Category,
+    Breadcrumb,
   },
   mounted() {
     this.getAllProducts();
-    this.getLatProducts();
-    this.getloadCategories();
-    
     (document.title = "Shop | BK");
   },
   methods: {
@@ -163,32 +103,6 @@ export default {
           console.log(error);
         });
 
-      this.$store.commit("setIsLoading", false);
-    },
-    async getLatProducts() {
-      this.$store.commit("setIsLoading", true);
-
-      await axios
-        .get(`/api/v1/products/latest/`)
-        .then((response) => {
-          this.latestProducts = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-
-      this.$store.commit("setIsLoading", false);
-    },
-    async getloadCategories() {
-      this.$store.commit("setIsLoading", true);
-      await axios
-        .get(`/api/v1/categories/`)
-        .then((response) => {
-          this.categories = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
       this.$store.commit("setIsLoading", false);
     },
   },
