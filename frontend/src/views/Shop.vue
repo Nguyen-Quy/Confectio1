@@ -98,6 +98,8 @@ export default {
         .get(`/api/v1/products/allproducts/?page=${this.currentPage}`)
         .then((response) => {
           this.allProducts = response.data;
+          this.showPrevButton = response.data.previous;
+          this.showNextButton = response.data.next;
         })
         .catch((error) => {
           console.log(error);
