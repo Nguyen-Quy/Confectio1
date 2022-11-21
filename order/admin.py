@@ -14,6 +14,5 @@ class OrderAdmin(admin.ModelAdmin):
                     'first_name', 'last_name', 'address', 'phone', 'created_at']
     list_filter = ['paid_amount', 'created_at']
     raw_id_fields = ['user']
-    list_editable = ['paid_amount']
     inlines = [OrderItemTabuler]
     list_per_page = 24

@@ -3,7 +3,6 @@
     <div class="MyAccount">
       <div class="container">
         <h1 class="text-uppercase font-weight-normal mb-5">Account Settings</h1>
-        <LogOut />
         <div class="bg-white shadow rounded-lg d-block d-sm-flex">
           <div class="profile-tab-nav border-right">
             <div class="p-4">
@@ -43,6 +42,7 @@
                 Set Password
               </router-link>
             </div>
+            <LogOut />
           </div>
           <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
             <OrderSummary />
