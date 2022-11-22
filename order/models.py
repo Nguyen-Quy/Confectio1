@@ -1,4 +1,5 @@
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from accounts.models import User
 from django.db import models
 from django.conf import settings
 
@@ -13,7 +14,7 @@ class Order(models.Model):
         ('Delivered', 'Delivered'),
     )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, related_name='orders', on_delete=models.CASCADE)
+        User(is_customer=True), related_name='orders', on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     email = models.CharField(max_length=100)

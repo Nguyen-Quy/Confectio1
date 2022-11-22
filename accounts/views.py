@@ -30,7 +30,7 @@ def register(request):
         if form.is_valid():
             user = form.save()
             msg = 'user created'
-            return redirect(login_view)
+            return render(request, 'accounts/login.html', {'form': form, 'msg': msg})
         else:
             msg = 'form is not valid'
     else:
@@ -80,8 +80,17 @@ def staff(request):
 def order_dashboard(request):
     orders = Order.objects.all().order_by('-status')[0:5]
     customers = User.objects.filter(is_customer=True)
-
     total_customer = customers.count()
+
+    customer_order = Order.objects.filter(user__id__in=customers.all())
+    print('customer order: ', customer_order)
+
+    order_items = OrderItem.objects.filter(order_id__in=customer_order)
+    zipped_order = zip(customers, order_items)
+
+    c = Product.objects.filter(id__in=order_items.values('product_id'))
+    num = order_items.values('product_id').annotate(n=Count('product_id'))
+    zipped_lst = zip(c, num)
 
     total_orders = Order.objects.all().count()
     delivered = Order.objects.filter(status='Delivered').count()
@@ -90,8 +99,11 @@ def order_dashboard(request):
     context = {
         'customers': customers,
         'orders': orders,
+        'customer_order': customer_order,
+        'order_list': zipped_order,
         'total_customer': total_customer,
         'total_orders': total_orders,
+        # 'list': zipped_lst,
         'delivered': delivered,
         'pending': pending
     }
@@ -110,20 +122,12 @@ def customer(request, pk):
     num = items.values('product_id').annotate(n=Count('product_id'))
     zipped_lst = zip(c, num)
     print(zipped_lst)
-    # orders = customer.order_set.all()
-    # total_orders = orders.count()
-
-    # order_filter = OrderFilter(request.GET, queryset=orders)
-    # orders = order_filter.qs
 
     context = {
         'customer': customer,
         'customer_order': customer_order,
         'items': items,
         'list': zipped_lst,
-        # 'orders': orders,
-        # 'total_orders': total_orders,
-        # 'filter': order_filter
     }
     return render(request, 'adminpage/customer.html', context)
 
