@@ -25,18 +25,10 @@
         </h6>
         <h5>Giá: {{ product.price }} VNĐ</h5>
       </div>
-          <!-- <div class="button-group">
-            <button class="button" @click="addToCart()">Add to cart</button>
-              <router-link :to="product.get_absolute_url" class="product__item">
-                <button class="button">Product Details</button>
-              </router-link>
-          </div> -->
       </div>  
     </div>
   <router-view/>  
 </template>
-
-import 
 
 <script>
 
@@ -85,25 +77,7 @@ export default {
 </script>
 
 <style scoped>
-  /* .button {
-    position: center;
-    display: inline-block;
-    margin: 0em 1;
-    padding: 1em 0.5em;
-    background: #fff;
-    border: 3px solid tomato;
-    border-radius: 10px;
-    color: tomato;
-    font-family: "Quicksand", sans-serif;
-    font-size: 0.6em;
-    font-weight: 800;
-    letter-spacing: 0.2em;
-    line-height: 1;
-    text-decoration: none;
-    text-transform: uppercase;
-    cursor:pointer;
-    transition: 0.3s;
-  } */
+
 .img-container{
   position: relative;
 }

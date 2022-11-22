@@ -126,7 +126,7 @@
                 :key="product.id"
                 :product="product"
               />
-            </div>
+          </div>
           </div>
         </div>
       </div>
@@ -152,18 +152,23 @@ export default {
       categories: [],
     };
   },
+
   components: {
     AllProduct,
     LastestProduct,
   },
+
   mounted() {
     this.getAllProducts(),
       this.getLastProducts(),
       this.getloadCategories(),
       this.getSlider(),
       (document.title = "Shop | BK");
+    
   },
+  
   methods: {
+    
     async getAllProducts() {
       this.$store.commit("setIsLoading", true);
 
@@ -243,12 +248,13 @@ export default {
             priceInput[0].value = minVal;
             priceInput[1].value = maxVal;
             progress.style.left = (minVal / rangeInput[0].max) * 100 + "%";
-            progress.style.right =100 - (maxVal / rangeInput[1].max) * 100 + "%";
+            progress.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + "%";
           }
         });
       });
     }
   }, 
+
 };
 
 </script>

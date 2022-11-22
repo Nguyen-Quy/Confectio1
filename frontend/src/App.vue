@@ -61,9 +61,6 @@
       </div>
     </div>
   </header>
-  <!-- <section class="section">
-    <router-view />
-  </section> -->
   <router-view v-slot="{Component, route}">
     <Transition name="switch" mode="out-in">
       <div :key="route.name">

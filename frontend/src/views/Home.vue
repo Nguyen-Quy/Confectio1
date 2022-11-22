@@ -12,24 +12,24 @@
         </div>
       </div>
     </section>
-
-    <vueper-slides
-      autoplay
-      fixed-height="300px"
-      :pause-on-hover="pauseOnHover"
-      @autoplay-pause="internalAutoPlaying = false"
-      @autoplay-resume="internalAutoPlaying = true"
-    >
+    <transition class="slide">
+      <vueper-slides
+        autoplay
+        fixed-height="300px"
+        :pause-on-hover="pauseOnHover"
+        @autoplay-pause="internalAutoPlaying = false"
+        @autoplay-resume="internalAutoPlaying = true"
+      >
       <vueper-slide
-        class="slider"
+        class="slide"
         v-for="product in latestProducts"
         :key="product.id"
         :image="product.get_image"
         :content="product.name"
         :link="product.get_absolute_url"
-      />
-    </vueper-slides>
-
+        />
+      </vueper-slides>
+    </transition>
     <section class="featured spad">
       <div class="container">
         <div class="row">
@@ -135,5 +135,20 @@ export default {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 100% 200%;
+}
+
+.slide-enter-active,
+.slide-leave-active{
+  transition: opacity 0.7s ease-in-out;
+}
+
+.slide-enter-from,
+.slide-leave-to{
+  opacity: 0;
+}
+
+.slide-enter-to,
+.slide-leave-from{
+  opacity: 1;
 }
 </style>

@@ -52,7 +52,7 @@
                   :category="category"
                 >
                   <li>
-                    <router-link :to="`/shop${category.get_absolute_url}`">{{
+                    <router-link :to="`/shop${category.slug}`">{{
                       category.name
                     }}</router-link>
                   </li>
@@ -157,6 +157,7 @@ export default {
     AllProduct,
     LastestProduct,
   },
+
   data() {
     return {
       category: {
@@ -167,12 +168,14 @@ export default {
       categories: [],
     };
   },
+
   mounted() {
     this.getCategory();
     this.getAllProducts();
     this.getLastProducts();
     this.getloadCategories();
   },
+
   watch: {
     $route(to, from) {
       if (to.name === "Category") {
@@ -180,6 +183,7 @@ export default {
       }
     },
   },
+  
   methods: {
     async getAllProducts() {
       this.$store.commit("setIsLoading", true);
