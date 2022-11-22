@@ -41,7 +41,7 @@
                   >Sign up here</a
                 >
               </p>
-              <p><a href="/forgot-password">Forgot your password?</a></p>
+              <p><a href="/forget-password">Forgot your password?</a></p>
             </form>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default {
 
           this.$store.commit("setToken", token);
 
-          axios.defaults.headers.common["Authorization"] = "Token " + token;
+          axios.defaults.headers.common["Authorization"] = `Token${token}`;
 
           localStorage.setItem("token", token);
 
