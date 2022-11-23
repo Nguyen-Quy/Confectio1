@@ -7,7 +7,7 @@ from rest_framework import permissions, status, serializers
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from .forms import SignUpForm, LoginForm
+from .forms import SignUpForm, LoginForm, OrderForm
 
 from order.models import Order, OrderItem
 from order.serializers import OrderSerializer, OrderItemSerializer
@@ -79,18 +79,24 @@ def staff(request):
 
 def order_dashboard(request):
     orders = Order.objects.all().order_by('-status')[0:5]
+    # print('order', orders.values())
+    items = OrderItem.objects.filter(order__id__in=orders.all()).values(
+        'order_id').values('product_id')
+    products = Product.objects.filter(id__in=items)
+
+    zipped_order = zip(orders, products)
+
     customers = User.objects.filter(is_customer=True)
     total_customer = customers.count()
 
-    customer_order = Order.objects.filter(user__id__in=customers.all())
-    print('customer order: ', customer_order)
+    customer_order = Order.objects.filter(
+        user__id__in=customers.all()).values('user_id').annotate(n=Count('user_id'))
 
-    order_items = OrderItem.objects.filter(order_id__in=customer_order)
-    zipped_order = zip(customers, order_items)
+    # for co in customer_order:
+    #     print('customer: ', co['user_id'])
+    #     print('order: ', co['user_id__count'])
 
-    c = Product.objects.filter(id__in=order_items.values('product_id'))
-    num = order_items.values('product_id').annotate(n=Count('product_id'))
-    zipped_lst = zip(c, num)
+    zipped_lst = zip(customers, customer_order)
 
     total_orders = Order.objects.all().count()
     delivered = Order.objects.filter(status='Delivered').count()
@@ -100,10 +106,10 @@ def order_dashboard(request):
         'customers': customers,
         'orders': orders,
         'customer_order': customer_order,
-        'order_list': zipped_order,
         'total_customer': total_customer,
         'total_orders': total_orders,
-        # 'list': zipped_lst,
+        'list': zipped_lst,
+        'olist': zipped_order,
         'delivered': delivered,
         'pending': pending
     }
@@ -112,22 +118,25 @@ def order_dashboard(request):
 
 def customer(request, pk):
     customer = User.objects.get(id=pk)
-    customer_order = Order.objects.filter(user_id=customer)
-    print(customer_order)
+    phone = Order.objects.filter(user_id__in=pk)[0]
+    orders = Order.objects.filter(user__id=customer.id)
+    items = OrderItem.objects.filter(order__id__in=orders).values('product_id')
+    products = Product.objects.filter(id__in=items)
+    zipped_order = zip(orders, products)
 
-    items = OrderItem.objects.filter(order_id__in=customer_order)
-    print(items)
-
-    c = Product.objects.filter(id__in=items.values('product_id'))
-    num = items.values('product_id').annotate(n=Count('product_id'))
-    zipped_lst = zip(c, num)
-    print(zipped_lst)
+    total_orders = orders.count()
+    items = OrderItem.objects.filter(order_id__in=orders)
+    # print(items)
 
     context = {
         'customer': customer,
-        'customer_order': customer_order,
+        'orders': orders,
         'items': items,
-        'list': zipped_lst,
+        'phone': phone,
+        'total_orders': total_orders,
+        'olist': zipped_order,
+
+        # 'list': zipped_lst
     }
     return render(request, 'adminpage/customer.html', context)
 
@@ -138,21 +147,46 @@ def products(request):
     return render(request, 'adminpage/products.html', context)
 
 
-class OrderList(APIView):
-    def get(self, request, format=None):
-        orders = Order.objects.all()
-        serializer = OrderSerializer(orders, many=True)
-        return Response(serializer.data)
+def updateOrder(request, pk):
+    action = 'update'
+    order = Order.objects.get(id=pk)
+    form = OrderForm(instance=order)
 
-    def post(self, request, format=None):
-        serializer = OrderSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'POST':
+        form = OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            # return redirect('/customer/'+str(order.user_id))
+            return redirect('/accounts/customer/'+str(order.user_id))
+    context = {'action': action, 'form': form}
+    return render(request, 'adminpage/order_form.html', context)
 
 
-class OrderDetail(APIView):
+def deleteOrder(request, pk):
+    order = Order.objects.get(id=pk)
+    if request.method == 'POST':
+        customer_id = order.user_id
+        customer_url = '/accounts/customer/'+str(customer_id)
+        order.delete()
+        return redirect(customer_url)
+    return render(request, 'adminpage/delete_item.html', {'item': order})
+
+
+# class OrderList(APIView):
+#     def get(self, request, format=None):
+#         orders = Order.objects.all()
+#         serializer = OrderSerializer(orders, many=True)
+#         return Response(serializer.data)
+
+#     def post(self, request, format=None):
+#         serializer = OrderSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# class OrderDetail(APIView):
     permission_classes = [AllowAny, ]
 
     def get_object(self, pk, format=None):
@@ -166,12 +200,14 @@ class OrderDetail(APIView):
         serializer = OrderSerializer(orders)
         return Response(serializer.data)
 
-    def put(self, request, pk):
+    def put(self, request, pk, format=None):
+        action = 'update'
         orders = self.get_object(pk)
         serializer = OrderSerializer(orders, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
+            return redirect('/customer/'+str(orders.customer.id))
+        context = {'action': action}
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):

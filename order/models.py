@@ -14,14 +14,14 @@ class Order(models.Model):
         ('Delivered', 'Delivered'),
     )
     user = models.ForeignKey(
-        User(is_customer=True), related_name='orders', on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-    email = models.CharField(max_length=100)
-    address = models.CharField(max_length=100)
-    zipcode = models.CharField(max_length=100)
-    place = models.CharField(max_length=100)
-    phone = models.CharField(max_length=100)
+        User, related_name='orders', on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, null=True)
+    email = models.CharField(max_length=100, null=True)
+    address = models.CharField(max_length=100, null=True)
+    zipcode = models.CharField(max_length=100, null=True)
+    place = models.CharField(max_length=100, null=True)
+    phone = models.CharField(max_length=100, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(
         max_length=100, null=True, choices=STATUS, default='Pending')
@@ -33,7 +33,12 @@ class Order(models.Model):
         ordering = ['-created_at', ]
 
     def __str__(self):
-        return self.first_name
+        return self.user.username
+
+    @property
+    def items(self):
+        item_info = self.orderitem_set.all()
+        return str(item_info)
 
 
 class OrderItem(models.Model):

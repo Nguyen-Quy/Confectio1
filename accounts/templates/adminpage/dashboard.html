@@ -22,18 +22,18 @@
 					<th>Customer</th>
 					<th>Orders</th>
 				</tr>
-				{% for customer,order in order_list %}
+				{% for item,n in list %}
 				
 				<tr>
 					<td>
 						<a
 							class="btn btn-sm btn-info"
-							href="{% url 'accounts:customer' customer.id %}">
+							href="{% url 'accounts:customer' item.id %}">
 							View
 						</a>
 					</td>
-					<td>{{customer.username}}</td>
-					<td>{{order.order}}</td>
+					<td>{{item.first_name}} {{item.last_name}}</td>
+					<td>{{n.n}}</td>
 				</tr>
 				
 				{% endfor %}
@@ -45,11 +45,6 @@
 		<h5>LAST 5 ORDERS</h5>
 		<hr />
 		<div class="card card-body">
-			<a
-				class="btn btn-primary btn-sm btn-block"
-				href="{% url 'accounts:order_list' %}"
-				>Create Order</a
-			>
 			<table class="table table-sm">
 				<tr>
 					<th>Product</th>
@@ -58,22 +53,22 @@
 					<th>Update</th>
 					<th>Remove</th>
 				</tr>
-				{% for order in orders %}
+				{% for order,product in olist %}
 				<tr>
-					<td>{{order.product}}</td>
-					<td>{{order.date_created}}</td>
+					<td>{{product.name}}</td>
+					<td>{{order.created_at}}</td>
 					<td>{{order.status}}</td>
 					<td>
 						<a
 							class="btn btn-sm btn-warning"
-							href="{% url 'accounts:order_status' order.id %}">
+							href="{% url 'accounts:update_order' order.id %}">
 							Update
 						</a>
 					</td>
 					<td>
 						<a
 							class="btn btn-sm btn-danger"
-							href="{% url 'accounts:order_status' order.id %}">
+							href="{% url 'accounts:delete_order' order.id %}">
 							Cancel
 						</a>
 					</td>

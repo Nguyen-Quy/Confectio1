@@ -6,22 +6,13 @@
 <br>
 
 <div class="row">
-	<div class="col-md">
-		<div class="card card-body">
-			<h5>Customer: {{customer.name}}</h5>
-			<hr>
-			<a class="btn btn-outline-info  btn-sm btn-block" href="">Update Customer</a>
-			<a class="btn btn-outline-danger  btn-sm btn-block" href="">Delete Customer</a>
-
-		</div>
-	</div>
 
 	<div class="col-md">
 		<div class="card card-body">
 			<h5>Contact Information</h5>
 			<hr>
 			<p>Email:  {{customer.email}}</p>
-			<p>Phone:  {{customer.phone}}</p>
+			<p>Phone:  {{phone.phone}}</p>
 		</div>
 	</div>
 
@@ -58,20 +49,18 @@
 			<table class="table table-sm">
 				<tr>
 					<th>Product</th>
-					<th>Category</th>
 					<th>Date Orderd</th>
 					<th>Status</th>
 					<th>Update</th>
 					<th>Remove</th>
 				</tr>
-				{% for order in orders %}
+				{% for order,product in olist %}
 					<tr>
-						<td>{{order.product}}</td>
-						<td>{{order.category}}</td>
-						<td>{{order.date_created}}</td>
+						<td>{{product.name}}</td>
+						<td>{{order.created_at}}</td>
 						<td>{{order.status}}</td>
-						<td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
-						<td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Cancel</a></td>
+						<td><a class="btn btn-sm btn-info" href="{% url 'accounts:update_order' order.id %}">Update</a></td>
+						<td><a class="btn btn-sm btn-danger" href="{% url 'accounts:delete_order' order.id %}">Cancel</a></td>
 					</tr>
 				{% endfor %}
 			</table>
