@@ -23,7 +23,7 @@
       <a class="fa fa-plus-square " @click="incrementQuantity(item)"></a>
     </div>
     <div class="pl-md-0 pl-1"><b>{{ getItemTotal(item).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</b></div>
-    <div class="close" @click="removeFromCart(item)">&times;</div>
+    <button class="close" @click="removeFromCart(item)">&times;</button>
   </div>
 </template>
 
