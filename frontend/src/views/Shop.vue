@@ -2,7 +2,6 @@
   <div class="Shop">
     <Search />
     <Breadcrumb />
-    <!-- Product Section Begin -->
     <section class="product spad">
       <div class="container">
         <div class="row">
@@ -12,13 +11,13 @@
               <LatestProduct />
             </div>
           </div>
-          <div class="col-lg-9 col-md-7">
+          <div class="col-lg-9 col-md-7" ref="top">
             <div class="filter__item">
               <div class="row">
                 <div class="col-lg-4 col-md-4">
                   <div class="filter__found">
                     <h6>
-                      <span>{{ allProducts.length }}</span> Products found
+                      <span>{{ allProducts.results.length }}</span> Products found
                     </h6>
                   </div>
                 </div>
@@ -26,34 +25,41 @@
             </div>
             <div class="row">
               <AllProduct
-                v-for="product in allProducts"
-                :key="product.id"
-                :product="product"
+                v-for="product in allProducts.results" :key="product.id" :product="product"
               />
             </div>
-            <ul class="pagination">
-              <li>
-                <button aria-label="Previous" @click="loadPrev()">
-                  <i class="fa fa-long-arrow-left"></i>
+            <div class="d-flex justify-content-center">
+              <template v-if="showPrevButton">
+                <button
+                  @click="
+                    loadPrev();
+                    scrollToElement();
+                  "
+                  class="mx-1">
+                  <i class="fa fa-long-arrow-left mx-1 my-1"></i>
                 </button>
-              </li>
-              <li>
-                <button aria-label="Next" @click="loadNext()">
-                  <i class="fa fa-long-arrow-right"></i>
+              </template>
+              <template v-if="showNextButton">
+                <button
+                  @click="
+                    loadNext();
+                    scrollToElement();
+                  "
+                  class="mx-1">
+                  <i class="fa fa-long-arrow-right mx-1 my-1"></i>
                 </button>
-              </li>
-            </ul>
+              </template>
+            </div>
           </div>
         </div>
       </div>
     </section>
-    <!-- Product Section End -->
   </div>
-  <router-view />
 </template>
 
 <script>
 import axios from "axios";
+import { toast } from "bulma-toast";
 
 import Category from "@/components/Category";
 import Breadcrumb from "@/components/Breadcrumb";
@@ -65,8 +71,12 @@ export default {
   name: "ShopPage",
   data() {
     return {
-      allProducts: [],
+      allProducts: {
+        results: []
+      },
       currentPage: 1,
+      showNextButton: false,
+      showPrevButton: false,
     };
   },
   components: {
@@ -78,6 +88,7 @@ export default {
   },
   mounted() {
     this.getAllProducts();
+    this.scrollToElement();
     (document.title = "Shop | BK");
   },
   methods: {
@@ -91,18 +102,31 @@ export default {
       this.getAllProducts();
       this.$router.push(`/shop/?page=${this.currentPage}`);
     },
+    scrollToElement() {
+      this.$refs["top"].scrollIntoView({ behavior: "smooth" });
+    },
     async getAllProducts() {
       this.$store.commit("setIsLoading", true);
 
       await axios
-        .get(`/api/v1/products/allproducts/?page=${this.currentPage}`)
+        .get(`/api/v1/products/?page=${this.currentPage}`)
         .then((response) => {
-          this.allProducts = response.data;
           this.showPrevButton = response.data.previous;
           this.showNextButton = response.data.next;
+
+          this.allProducts = response.data;
         })
         .catch((error) => {
           console.log(error);
+
+          toast({
+            message: "Something went wrong. Please try again.",
+            type: "is-danger",
+            dismissible: true,
+            pauseOnHover: true,
+            duration: 2000,
+            position: "bottom-right",
+          });
         });
 
       this.$store.commit("setIsLoading", false);

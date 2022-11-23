@@ -12,6 +12,7 @@
       </li>
     </ul>
   </div>
+  <router-view/>
 </template>
 
 <script>

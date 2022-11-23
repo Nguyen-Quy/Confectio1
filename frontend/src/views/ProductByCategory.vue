@@ -2,13 +2,12 @@
   <div class="Shop" :class="{ loading: loading }">
     <Search />
     <Breadcrumb />
-    <!-- Product Section Begin -->
     <section class="product spad">
       <div class="container">
         <div class="row">
           <div class="col-lg-3 col-md-5">
             <div class="sidebar">
-              <Category />
+              <category />
               <LatestProduct />
             </div>
           </div>
@@ -17,7 +16,9 @@
               <div class="row">
                 <div class="col-lg-4 col-md-4">
                   <div class="filter__found">
-                    <h6><span>{{category.products.length}}</span> Products found</h6>
+                    <h6>
+                      <span>{{ category.products.length }}</span> Products found
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -45,7 +46,6 @@
         </div>
       </div>
     </section>
-    <!-- Product Section End -->
   </div>
 </template>
 
@@ -61,13 +61,6 @@ import LatestProduct from "@/components/LatestProduct";
 
 export default {
   name: "ProductByCategory",
-  components: {
-    AllProduct,
-    LatestProduct,
-    Search,
-    Category,
-    Breadcrumb,
-  },
   data() {
     return {
       category: {
@@ -76,12 +69,19 @@ export default {
       currentPage: 1,
     };
   },
+  components: {
+    Category,
+    AllProduct,
+    LatestProduct,
+    Search,
+    Breadcrumb,
+  },
   mounted() {
     this.getProductByCategory();
   },
   watch: {
     $route(to, from) {
-      if (to.name === "Category") {
+      if (to.name === "ProductByCategory") {
         this.getProductByCategory();
       }
     },
@@ -91,18 +91,16 @@ export default {
       const categorySlug = this.$route.params.category_slug;
       this.currentPage += 1;
       this.getProductByCategory();
-      this.$router.push(`/shop/${categorySlug}/?page=${this.currentPage}`)
+      this.$router.push(`/shop/${categorySlug}/?page=${this.currentPage}`);
     },
-    
     loadPrev() {
       const categorySlug = this.$route.params.category_slug;
       this.currentPage -= 1;
       this.getProductByCategory();
-      this.$router.push(`/shop/${categorySlug}/?page=${this.currentPage}`)
+      this.$router.push(`/shop/${categorySlug}/?page=${this.currentPage}`);
     },
     async getProductByCategory() {
       const categorySlug = this.$route.params.category_slug;
-
       this.$store.commit("setIsLoading", true);
 
       axios
@@ -126,7 +124,7 @@ export default {
         });
 
       this.$store.commit("setIsLoading", false);
-    },
+    }
   },
 };
 </script>
