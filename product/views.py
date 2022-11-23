@@ -9,7 +9,6 @@ from rest_framework.response import Response
 
 from .models import Product, Category
 from .serializers import ProductSerializer, CategorySerializer
-from django.core.paginator import EmptyPage, Paginator, PageNotAnInteger
 from rest_framework.pagination import PageNumberPagination
 
 
@@ -26,8 +25,7 @@ class ProductViewSet(ModelViewSet):
 
     @action(detail=False, methods=['get'], url_path='latest',)
     def latest_product(self, request, format=None):
-        latest = self.get_queryset().order_by('-date_added')
-        # serializer = self.get_serializer_class()(latest)
+        latest = self.get_queryset().order_by('-date_added')[0:6]
         serializer = ProductSerializer(latest, many=True)
         return Response(serializer.data)
 

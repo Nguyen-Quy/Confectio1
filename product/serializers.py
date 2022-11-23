@@ -24,7 +24,6 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    # products = serializers.SerializerMethodField()
     products = ProductSerializer(many=True)
 
     class Meta:
@@ -40,8 +39,4 @@ class CategorySerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'url': {'lookup_field': 'slug'}
         }
-
-    # def get_products_set(self, obj):
-    #     products_query = Product.objects.filter(slug=obj.slug)
-    #     serializer = ProductSerializer(products_query, many=True)
-    #     return serializer.data
+        
