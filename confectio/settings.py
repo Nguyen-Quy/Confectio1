@@ -31,7 +31,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-port_thumbnail = "7777"
+port_thumbnail = '7777'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8082",
+]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,16 +53,12 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',
     'corsheaders',
-    # 'core',
-    # 'cart',
     'product',
     'order',
+    "account",
 
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8081",
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -124,13 +125,14 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = 'Asia/Saigon'
+TIME_ZONE = "Asia/Saigon"
 
 USE_I18N = True
 
 USE_L10N = True
+
 USE_TZ = True
 
 JAZZMIN_SETTINGS = {
@@ -160,15 +162,19 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'nguyenquy.kb94@gmail.com'
 EMAIL_HOST_PASSWORD = 'xxxxxx'
+# EMAIL_HOST_USER = 'hoquochung11102000@gmail.com'
+# EMAIL_HOST_PASSWORD = 'kkqmceoyfbphaijk'
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
 APPEND_SLASH = False
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
-    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    # 'PAGE_SIZE': 2,
+    
 }

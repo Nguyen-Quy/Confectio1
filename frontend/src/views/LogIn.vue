@@ -8,7 +8,7 @@
         <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
           <div
             v-if="!registerActive"
-            class="card login"
+            class="card-login login"
             :class="{ error: emptyFields }"
           >
             <h1>Sign In</h1>
@@ -41,7 +41,7 @@
                   >Sign up here</a
                 >
               </p>
-              <p><a href="/forgot-password">Forgot your password?</a></p>
+              <p><a href="/forget-password">Forget your password?</a></p>
             </form>
           </div>
         </div>
@@ -83,7 +83,7 @@ export default {
 
           this.$store.commit("setToken", token);
 
-          axios.defaults.headers.common["Authorization"] = "Token " + token;
+          axios.defaults.headers.common["Authorization"] = `Token${token}`;
 
           localStorage.setItem("token", token);
 

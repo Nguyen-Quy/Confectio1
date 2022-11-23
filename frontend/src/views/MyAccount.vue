@@ -1,76 +1,73 @@
 <template>
+  <section class="my-5">
     <div class="MyAccount">
-        <section class="page-my-account">
-            <div class="columns is-multiline">
-                <div class="column is-12">
-                    <h1 class="title">My account</h1>
-                </div>
-
-                <div class="column is-12">
-                    <button @click="logout()" class="button is-danger">Log out</button>
-                </div>
-
-                <hr>
-
-                <div class="column is-12">
-                    <h2 class="subtitle">My orders</h2>
-
-                    <OrderSummary
-                        v-for="order in orders"
-                        :key="order.id"
-                        :order="order" />
-                </div>
+      <div class="container">
+        <h1 class="text-uppercase font-weight-normal mb-5">Account Settings</h1>
+        <div class="bg-white shadow rounded-lg d-block d-sm-flex">
+          <div class="profile-tab-nav border-right">
+            <div class="p-4">
+              <div class="img-circle text-center mb-3">
+                <img src="../assets/img/avatar.png" alt="Image" class="shadow-img" />
+              </div>
+              <LoadCustomer />
             </div>
-        </section>
+            <div
+              class="nav flex-column nav-pills"
+              id="v-pills-tab"
+              role="tablist"
+              aria-orientation="vertical"
+            >
+              <router-link
+                class="nav-link active"
+                id="order-tab"
+                data-toggle="pill"
+                to="/my-account"
+                role="tab"
+                aria-controls="order"
+                aria-selected="false"
+              >
+                <i class="fa fa-shopping-bag text-center mr-1"></i>
+                Order
+              </router-link>
+              <router-link
+                class="nav-link"
+                id="password-tab"
+                data-toggle="pill"
+                to="/my-account/set-password"
+                role="tab"
+                aria-controls="password"
+                aria-selected="false"
+              >
+                <i class="fa fa-key text-center mr-1"></i>
+                Set Password
+              </router-link>
+            </div>
+            <LogOut />
+          </div>
+          <div class="tab-content p-4 p-md-5" id="v-pills-tabContent">
+            <OrderSummary />
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
+  <router-view />
 </template>
 
 <script>
-import axios from 'axios'
-
-import OrderSummary from '@/components/OrderSummary.vue'
+import OrderSummary from "@/components/OrderSummary.vue";
+import LogOut from "@/views/LogOut.vue";
+import LoadCustomer from "@/components/LoadCustomer";
 
 export default {
-    name: 'MyAccount',
-    components: {
-        OrderSummary
-    },
-    data() {
-        return {
-            orders: []
-        }
-    },
-    mounted() {
-        document.title = 'My account | BK'
-
-        this.getMyOrders()
-    },
-    methods: {
-        logout() {
-            axios.defaults.headers.common["Authorization"] = ""
-
-            localStorage.removeItem("token")
-            localStorage.removeItem("username")
-            localStorage.removeItem("userid")
-
-            this.$store.commit('removeToken')
-
-            this.$router.push('/')
-        },
-        async getMyOrders() {
-            this.$store.commit('setIsLoading', true)
-
-            await axios
-                .get('/api/v1/orders/')
-                .then(response => {
-                    this.orders = response.data
-                })
-                .catch(error => {
-                    console.log(error)
-                })
-
-            this.$store.commit('setIsLoading', false)
-        }
-    }
-}
+  name: "MyAccount",
+  components: {
+    OrderSummary,
+    LogOut,
+    LoadCustomer,
+  },
+  mounted() {
+    document.title = "My account | BK";
+  },
+};
 </script>
