@@ -24,7 +24,7 @@ def checkout(request):
         paid_amount = sum(item.get('quantity') * (item.get('product').price + item.get('product').price*0.1) for item in serializer.validated_data['items'])
         try:
             charge = stripe.Charge.create(
-                amount=int(paid_amount * 100),
+                amount=int(paid_amount),
                 currency='USD',
                 description='Charge from Djackets',
                 source=serializer.validated_data['stripe_token']

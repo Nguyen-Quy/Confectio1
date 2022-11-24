@@ -5,7 +5,7 @@
         <div class="col-lg-4 col-md-6 col-sm-8 mx-auto">
           <div class="card-forgot-password">
             <form class="form-group" @submit.prevent="submitForm">
-                <h3>Forget Password</h3>
+                <h3>Forgot Password</h3>
                 <input
                 v-model="email"
                 type="email"
