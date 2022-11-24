@@ -16,7 +16,7 @@
               <div class="d-flex flex-row px-lg-5 mx-lg-5 mobile" id="heading">
                 <div class="px-lg-5 mr-lg-5" id="produc">PRODUCTS</div>
                 <div class="px-lg-5 ml-lg-5" id="prc">PRICE</div>
-                <div class="px-lg-5 ml-lg-1" id="quantity">QUANTITY</div>
+                <div class="px-lg-5 ml-lg-3" id="quantity">QUANTITY</div>
                 <div class="px-lg-5 ml-lg-3" id="total">TOTAL</div>
               </div>
               <CartItem
