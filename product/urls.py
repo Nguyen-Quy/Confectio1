@@ -10,4 +10,3 @@ router.register('categories', CategoryViewSet, basename='categories')
 urlpatterns = [
     path('products/search/', search),
 ]+router.urls
-
