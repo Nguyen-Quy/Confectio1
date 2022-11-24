@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 port_thumbnail = '7777'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8082",
+    "http://localhost:8081",
 ]
 
 # Application definition
