@@ -3,15 +3,23 @@
     <div class="columns is-multiline">
       <div class="row">
         <div class="col-lg-5">
-          <figure class="image mb-6">
-            <img :src="product.get_image" />
-          </figure>
+          <v-card>
+            <div class="product__item-inner_detail">
+              <div class="img-container_detail">
+                <div class="product-image-wrap_detail">
+                  <img :src="product.get_thumbnail" class="image">
+                </div>
+              </div>
+            </div>
+          </v-card>
         </div>
-
         <div class="col-lg-7">
-          <h1 class="title">{{ product.name }}</h1>
-          <p>{{ product.description }}</p>
-          <p><strong>Giá: </strong>{{ String(product.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ</p>
+          <div class="title_details">
+            <h1>{{ product.name }}</h1>
+            <p>{{ product.description }}</p>
+            <p><strong>Giá: </strong>{{ String(product.price).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") }} VNĐ
+            </p>
+          </div>
           <div class="field has-addons mt-6">
             <div class="control">
               <input type="number" class="input" min="1" v-model="quantity" />
@@ -92,3 +100,35 @@ export default {
 };
 
 </script>
+
+<style>
+.page-product {
+  background: rgb(243, 214, 142);
+}
+
+.image_detail {
+  position: relative;
+  left: 5%;
+  border-radius: 10%;
+  height: 80%;
+  width: 80%;
+  aspect-ratio: 7/8;
+}
+
+.product__item-inner_detail {
+  position: relative;
+  left: 5%;
+  border-radius: 10%;
+  height: 100%;
+  width: 90%;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.25);
+}
+
+.img-container_detail {
+  position: relative;
+}
+
+.title_details {
+  font-family: Calibri;
+}
+</style>
