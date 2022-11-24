@@ -14,6 +14,7 @@ from order.serializers import OrderSerializer, OrderItemSerializer
 from product.models import Product
 from .models import User
 from .filters import OrderFilter
+from datetime import time
 
 
 """Accounts registration"""
@@ -26,16 +27,20 @@ def index(request):
 def register(request):
     msg = None
     if request.method == 'POST':
-        form = SignUpForm(request.POST)
+        form = SignUpForm(data=request.POST)
         if form.is_valid():
             user = form.save()
             msg = 'user created'
-            return render(request, 'accounts/login.html', {'form': form, 'msg': msg})
+            return redirect('/accounts/login/')
         else:
             msg = 'form is not valid'
+            return render(request, 'accounts/register.html', {'form': form, 'msg': msg}) 
+
+           
     else:
         form = SignUpForm()
-    return render(request, 'accounts/register.html', {'form': form, 'msg': msg})
+        return render(request, 'accounts/register.html', {'form': form, 'msg': msg}) 
+    # return render(request, 'accounts/register.html', {'form': form, 'msg': msg})
 
 
 def login_view(request):
@@ -48,13 +53,10 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None and user.is_admin:
                 login(request, user)
-                return render(request, 'accounts/admin.html')
-            if user is not None and user.is_customer:
-                login(request, user)
-                return render(request, 'accounts/customer.html')
+                return redirect('/accounts/dashboard/')
             if user is not None and user.is_staff:
                 login(request, user)
-                return render(request, 'accounts/staff.html')
+                return redirect('/accounts/staff/')
             else:
                 msg = 'invalid credential'
         else:
@@ -65,13 +67,20 @@ def login_view(request):
 def adminpage(request):
     return render(request, 'accounts/admin.html')
 
-
-def customer(request):
-    return render(request, 'accounts/customer.html')
-
-
 def staff(request):
-    return render(request, 'accounts/staff.html')
+    point = 10
+    staff_time = request.user.last_login
+    d = staff_time.replace(hour=8,minute=0).strftime('%Y-%m-%d')
+    #Check in time
+    # if (staff_time - d > 0):
+    #     point -= 1
+    # else:
+    #     point +=1
+    print(staff_time)
+    
+    # print("request", request.user.last_login)
+
+    return render(request, 'accounts/staff.html', {'point': point})
 
 
 """Admin page"""
@@ -214,3 +223,5 @@ def deleteOrder(request, pk):
         orders = self.get_object(pk)
         orders.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
