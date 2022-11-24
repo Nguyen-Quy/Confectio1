@@ -41,7 +41,7 @@
                   >Sign up here</a
                 >
               </p>
-              <p><a href="/forget-password">Forget your password?</a></p>
+              <p><a href="/forgot-password">Forgot your password?</a></p>
             </form>
           </div>
         </div>

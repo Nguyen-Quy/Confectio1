@@ -11,5 +11,3 @@ urlpatterns = [
     path('products/search/', search),
 ]+router.urls
 
-for url in router.urls:
-    print(url, '\n')

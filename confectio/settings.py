@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'f_)*$6xz#a7k(6ir&u@+tq8h@_t_9%3nr%9g5z4vdp#*a4)a*o'
 
 # SECURITY WARNING: keep the secret key used in production secret!
-STRIPE_SECRET_KEY = 'sk_test_51LseHJJrgRKxls7zYgJAfoYDpt4BU3PIf6YeqdIJOfCZHCqRUsKsok4D4tcoe3RpVo1ONvpbMLSQgfLs12nuOMXe00oFnjtj0n'
+STRIPE_SECRET_KEY = 'sk_test_51M7WBDB4eGNJFQglcwd5GNTqdkIsGURa8JebhNwfJm0iKj7dmCCIwt34WNg0s8yGuBA6D9IyHuDh7fbPLJLTKfmE00L1WWxRlZ'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -34,7 +34,7 @@ ALLOWED_HOSTS = []
 port_thumbnail = '7777'
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8082",
+    "http://localhost:8081",
 ]
 
 # Application definition
@@ -160,10 +160,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'nguyenquy.kb94@gmail.com'
-EMAIL_HOST_PASSWORD = 'xxxxxx'
-# EMAIL_HOST_USER = 'hoquochung11102000@gmail.com'
-# EMAIL_HOST_PASSWORD = 'kkqmceoyfbphaijk'
+# EMAIL_HOST_USER = 'nguyenquy.kb94@gmail.com'
+# EMAIL_HOST_PASSWORD = 'xxxxxx'
+EMAIL_HOST_USER = 'hoquochung11102000@gmail.com'
+EMAIL_HOST_PASSWORD = 'kkqmceoyfbphaijk'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = "/"
@@ -176,5 +176,4 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
-    
 }
